@@ -1,0 +1,38 @@
+﻿@model Cart
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+@if (Model == null)
+{
+    <h3>
+        Корзина пуста
+    </h3>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Стоимость</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Cost</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Cost</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+<a asp-controller="Home" asp-action="Index" class="btn btn-dark return-to-catalog">Вернуться в каталог</a>}

@@ -2,7 +2,7 @@
 
 namespace AirsoftShop
 {
-    public class ProductRepository
+    public class ProductsRepository
     {
         private static List<Product> products = new List<Product>()
         {
