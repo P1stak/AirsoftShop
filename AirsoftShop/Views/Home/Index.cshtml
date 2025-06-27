@@ -1,0 +1,23 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Каталог товаров";
+}
+
+<link rel="stylesheet" href="~/css/products-grid.css" />
+
+<h1 class="text-center my-4">Каталог товаров</h1>
+
+<div class="products-grid-container">
+    @foreach (var product in Model)
+    {
+        <a href="/product/index/@product.Id" class="product-card-square">
+            <div class="product-image-wrapper">
+                <img class="product-image-square" src="@product.ImageUrl" alt="@product.Name">
+            </div>
+            <div class="product-info-square">
+                <div class="product-title-square" title="@product.Name">@product.Name</div>
+                <div class="product-price-square">@product.Cost руб.</div>
+            </div>
+        </a>
+    }
+</div>

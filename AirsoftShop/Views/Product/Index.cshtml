@@ -1,0 +1,22 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<link rel="stylesheet" href="~/css/products.css" />
+
+<div class="product-detail-container">
+    <div class="product-detail-card">
+        <img class="product-detail-image" src="@Model.ImageUrl" alt="@Model.Name">
+        <div class="product-detail-body">
+            <h2 class="product-detail-title">@Model.Name</h2>
+            <p class="product-detail-description">@Model.Descriprion</p>
+            <div class="product-detail-price">@Model.Cost руб.</div>
+
+            <div class="action-buttons">
+                <a class="btn btn-dark" href="#" role="button">Добавить в корзину</a>
+                <a class="btn btn-dark" href="/home/index" role="button">Вернуться в каталог</a>
+            </div>
+        </div>
+    </div>
+</div>
