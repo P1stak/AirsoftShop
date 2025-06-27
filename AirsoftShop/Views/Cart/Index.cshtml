@@ -12,13 +12,13 @@ else
 {
     <div class="row">
         <div class="col">
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Название</th>
-                        <th>Цена</th>
+                        <th>Цена руб.</th>
                         <th>Количество</th>
-                        <th>Стоимость</th>
+                        <th>Стоимость руб.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +33,14 @@ else
                     }
                 </tbody>
             </table>
+            <div class="text-lg-end">
+                <h3>Итого:</h3>
+                <h3>@Model.Cost</h3>
+            </div>
+            <div class="text-lg-end">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-dark return-to-catalog">Вернуться в каталог</a>
+            </div>
         </div>
     </div>
-<a asp-controller="Home" asp-action="Index" class="btn btn-dark return-to-catalog">Вернуться в каталог</a>}
+}
+
