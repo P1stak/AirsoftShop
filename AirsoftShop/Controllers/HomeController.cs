@@ -6,11 +6,11 @@ namespace AirsoftShop.Controllers
 {
     public class HomeController : Controller
     {
-        private ProductRepository _productRepository;
+        private ProductsRepository _productRepository;
 
         public HomeController()
         {
-            _productRepository = new ProductRepository();
+            _productRepository = new ProductsRepository();
         }
 
         public IActionResult Index()

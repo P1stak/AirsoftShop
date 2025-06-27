@@ -4,11 +4,11 @@ namespace AirsoftShop.Controllers
 {
     public class ProductController : Controller
     {
-        private ProductRepository _productRepository;
+        private ProductsRepository _productRepository;
 
         public ProductController()
         {
-            _productRepository = new ProductRepository();
+            _productRepository = new ProductsRepository();
         }
 
         public IActionResult Index(int id)
