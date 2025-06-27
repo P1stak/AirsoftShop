@@ -47,7 +47,7 @@ namespace AirsoftShop
                 // есть ли такая же позиция в нашей корзине, которую пользователь хочет снова добавить
                 var existingCartItem = exictingCart.Items.FirstOrDefault(x => x.Product.Id == product.Id);
 
-                if (exictingCart != null)
+                if (existingCartItem != null)
                 {
                     existingCartItem.Amount += 1;
                 }
