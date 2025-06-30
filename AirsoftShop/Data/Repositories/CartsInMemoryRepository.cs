@@ -8,7 +8,7 @@ namespace AirsoftShop.Data.Repositories
 
         private List<Cart> carts = new List<Cart>();
 
-        public Cart? TryGetByUserId(string userId)
+        public Cart TryGetByUserId(string userId)
         {
             return carts.FirstOrDefault(c => c.UserId == userId);
         }
@@ -55,6 +55,34 @@ namespace AirsoftShop.Data.Repositories
                     });
                 }
             }
+        }
+
+        public void DecreaseAmount(int productId, string userId)
+        {
+            // получаем существующую позицию в корзине
+            var exictingCart = TryGetByUserId(userId);
+
+            // находим и проверяем ее везде на null
+            var existingCartItem = exictingCart?.Items?.FirstOrDefault(x => x.Product.Id == productId);
+
+            // если null то оставляем как есть
+            if (existingCartItem == null)
+            {
+                return;
+            }
+            existingCartItem.Amount -= 1;
+
+            // если позиции нет, то очищаем эту позицию с корзины
+            if (existingCartItem.Amount == 0)
+            {
+                exictingCart.Items.Remove(existingCartItem);
+            }
+        }
+
+        public void Clear(string userId)
+        {
+            var exictingCart = TryGetByUserId(userId);
+            carts.Remove(exictingCart);
         }
     }
 }
