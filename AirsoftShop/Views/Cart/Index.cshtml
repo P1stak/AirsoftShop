@@ -27,7 +27,13 @@ else
                         <tr>
                             <td>@item.Product.Name</td>
                             <td>@item.Product.Cost</td>
-                            <td>@item.Amount</td>
+
+                            <td>
+                                <button class="btn btn-sm btn-secondary" href="/Cart/DecreaseAmount?productId=@item.Product.Id">-</button>
+                                @item.Amount
+                                <button class="btn btn-sm btn-secondary" href="/Cart/IncreaseAmount?productId=@item.Product.Id">+</button>
+                            </td>
+
                             <td>@item.Cost</td>
                         </tr>
                     }
@@ -37,8 +43,9 @@ else
                 <h3>Итого:</h3>
                 <h3>@Model.Cost</h3>
             </div>
-            <div class="text-lg-end">
-                <a asp-controller="Home" asp-action="Index" class="btn btn-dark return-to-catalog">Вернуться в каталог</a>
+            <div class="text-center">
+                <a class="btn btn-primary" href="/home/index" role="button">Прололжить покупки</a>
+                <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
             </div>
         </div>
     </div>

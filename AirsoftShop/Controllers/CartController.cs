@@ -1,28 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AirsoftShop.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AirsoftShop.Controllers
 {
     public class CartController : Controller
     {
-        private ProductsRepository _productRepository;
+        private IProductsRepository _productRepository;
+        private ICartsRepository _cartRepository;
 
-        public CartController(ProductsRepository productRepository)
+        public CartController(IProductsRepository productRepository, ICartsRepository cartRepository)
         {
             _productRepository = productRepository;
+            _cartRepository = cartRepository;
         }
         public IActionResult Index()
         {
-            var cart = CartsRepository.TryGetByUserId(Constants.UserId);
+            var cart = _cartRepository.TryGetByUserId(Constants.UserId);
             return View(cart);
         }
         public IActionResult Add(int productId)
         {
             var product = _productRepository.TryGetById(productId);
-
-            CartsRepository.Add(product, Constants.UserId);
-
+            _cartRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
-
         }
+
+
     }
 }

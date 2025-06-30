@@ -1,19 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AirsoftShop.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AirsoftShop.Controllers
 {
     public class ProductController : Controller
     {
-        private ProductsRepository _productRepository;
+        private IProductsRepository _productsRepository;
+        private ICartsRepository _cartsRepository;
 
-        public ProductController()
+        public ProductController(IProductsRepository productsRepository, ICartsRepository cartsRepository)
         {
-            _productRepository = new ProductsRepository();
+            _productsRepository = productsRepository;
+            _cartsRepository = cartsRepository;
         }
 
         public IActionResult Index(int id)
         {
-            var product = _productRepository.TryGetById(id);
+            var product = _productsRepository.TryGetById(id);
             return View(product);
         }
     }

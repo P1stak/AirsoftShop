@@ -1,3 +1,5 @@
+using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Data.Repositories;
 using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,16 +8,15 @@ namespace AirsoftShop.Controllers
 {
     public class HomeController : Controller
     {
-        private ProductsRepository _productRepository;
+        private IProductsRepository _productRepository;
 
-        public HomeController()
+        public HomeController(IProductsRepository productRepository)
         {
-            _productRepository = new ProductsRepository();
+            _productRepository = productRepository;
         }
 
         public IActionResult Index()
         {
-
             var product = _productRepository.GetAll();
             return View(product);
         }
