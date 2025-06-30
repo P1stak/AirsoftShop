@@ -1,25 +1,19 @@
-﻿using AirsoftShop.Models;
+﻿using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Models;
 
-namespace AirsoftShop
+namespace AirsoftShop.Data.Repositories
 {
-    public static class CartsRepository
+    public class CartsInMemoryRepository : ICartsRepository
     {
-        /// <summary>
-        /// список всех корзин пользователей
-        /// </summary>
-        private static List<Cart> carts = new List<Cart>();
 
-        /// <summary>
-        /// Метод находит конкретного пользователя из всех корзин
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public static Cart TryGetByUserId(string userId)
+        private List<Cart> carts = new List<Cart>();
+
+        public Cart? TryGetByUserId(string userId)
         {
             return carts.FirstOrDefault(c => c.UserId == userId);
         }
 
-        public static void Add(Product product, string userId)
+        public void Add(Product product, string userId)
         {
             var exictingCart = TryGetByUserId(userId);
 

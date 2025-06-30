@@ -1,10 +1,12 @@
-using AirsoftShop;
+using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ProductsRepository>();
+builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>();
+builder.Services.AddSingleton<ICartsRepository, CartsInMemoryRepository>();
 
 var app = builder.Build();
 

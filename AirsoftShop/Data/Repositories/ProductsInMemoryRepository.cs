@@ -1,10 +1,11 @@
-﻿using AirsoftShop.Models;
+﻿using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Models;
 
-namespace AirsoftShop
+namespace AirsoftShop.Data.Repositories
 {
-    public class ProductsRepository
+    public class ProductsInMemoryRepository : IProductsRepository
     {
-        private static List<Product> products = new List<Product>()
+        private List<Product> products = new List<Product>()
         {
             new Product("АКС-74", 23500, "Автомат страйкбольный E&L АКС-74 ELS-74 MN Gen2", "/images/ak74.jpg"),
             new Product("CM.518", 10000, "Страйкбольная штурмовая винтовка Cyma CM.518", "/images/cyma518.jpg"),
@@ -23,7 +24,7 @@ namespace AirsoftShop
             return products;
         }
 
-        internal Product TryGetById(int id)
+        public Product? TryGetById(int id)
         {
             return products.FirstOrDefault(p => p.Id == id);
         }
