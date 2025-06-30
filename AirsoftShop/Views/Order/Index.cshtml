@@ -1,0 +1,57 @@
+﻿@model Cart
+
+@if (Model == null || Model.Items.Count == 0)
+{
+    <h3>Корзина пуста</h3>
+    <a class="btn btn-primary" href="/home/index">Вернуться к покупкам</a>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <h3>Ваш заказ:</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Цена (руб.)</th>
+                        <th>Количество</th>
+                        <th>Сумма</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Cost</td>
+                            <td>@item.Amount</td>
+                            <td>@(item.Product.Cost* item.Amount)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-end">
+                <h4>Итого: @Model.Cost руб.</h4>
+            </div>
+
+            <h3 class="mt-4">Данные для заказа:</h3>
+            <form action="/order/buy" method="post">
+                <div class="mb-3">
+                    <label class="form-label">ФИО</label>
+                    <input type="text" class="form-control" name="fullName" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Адрес доставки</label>
+                    <input type="text" class="form-control" name="address" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Телефон</label>
+                    <input type="tel" class="form-control" name="phone" required>
+                </div>
+                <button type="submit" class="btn btn-success">Оформить заказ</button>
+                <a class="btn btn-secondary" href="/cart/index">Вернуться в корзину</a>
+            </form>
+        </div>
+    </div>
+}

@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="~/css/site.css" />
 
-@if (Model == null)
+@if (Model == null || Model.Items.Count == 0)
 {
     <h3>
         Корзина пуста
@@ -29,15 +29,16 @@ else
                             <td>@item.Product.Cost</td>
 
                             <td>
-                                <button class="btn btn-sm btn-secondary" href="/Cart/DecreaseAmount?productId=@item.Product.Id">-</button>
+                                <a class="btn btn-sm btn-secondary" href="/cart/DecreaseAmount?productId=@item.Product.Id" role="button">-</a>
                                 @item.Amount
-                                <button class="btn btn-sm btn-secondary" href="/Cart/IncreaseAmount?productId=@item.Product.Id">+</button>
+                                <a class="btn btn-sm btn-secondary" href="/cart/Add?productId=@item.Product.Id" role="button">+</a>
                             </td>
 
                             <td>@item.Cost</td>
                         </tr>
                     }
                 </tbody>
+                <a class="btn btn-sm btn-danger" href="/cart/Clear" role="button">Очистить корзину</a>
             </table>
             <div class="text-lg-end">
                 <h3>Итого:</h3>
@@ -45,7 +46,7 @@ else
             </div>
             <div class="text-center">
                 <a class="btn btn-primary" href="/home/index" role="button">Прололжить покупки</a>
-                <a class="btn btn-success" href="#" role="button">Оформить заказ</a>
+                <a class="btn btn-success" href="/order/index" role="button">Оформить заказ</a>
             </div>
         </div>
     </div>
