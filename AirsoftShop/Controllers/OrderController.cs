@@ -6,25 +6,27 @@ namespace AirsoftShop.Controllers
 {
     public class OrderController : Controller
     {
-        private ICartsRepository _cartRepository;
+        private ICartsRepository _cartsRepository;
         private IOrdersRepository _ordersRepository;
 
-        public OrderController(ICartsRepository cartRepository, IOrdersRepository ordersRepository)
+        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersRepository)
         {
-            _cartRepository = cartRepository;
+            _cartsRepository = cartsRepository;
             _ordersRepository = ordersRepository;
         }
         public IActionResult Index()
         {
-            var user = _cartRepository.TryGetByUserId(Constants.UserId);
+            var user = _cartsRepository.TryGetByUserId(Constants.UserId);
             return View(user);
         }
-        public IActionResult Buy()
+
+        [HttpPost]
+        public IActionResult Buy(Order order)
         {
-            var existingCart = _cartRepository.TryGetByUserId(Constants.UserId);
+            var existingCart = _cartsRepository.TryGetByUserId(Constants.UserId);
             _ordersRepository.Add(existingCart);
-            _cartRepository.Clear(Constants.UserId);
-            return View(existingCart);
+            _cartsRepository.Clear(Constants.UserId);
+            return View();
         }
     }
 }

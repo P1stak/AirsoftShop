@@ -3,10 +3,11 @@
 @if (Model == null || Model.Items.Count == 0)
 {
     <h3>Корзина пуста</h3>
-    <a class="btn btn-primary" href="/home/index">Вернуться к покупкам</a>
+    <a class="btn btn-primary align-content-center" href="/home/index">Вернуться к покупкам</a>
 }
 else
 {
+    
     <div class="row">
         <div class="col">
             <h3>Ваш заказ:</h3>
@@ -26,7 +27,7 @@ else
                             <td>@item.Product.Name</td>
                             <td>@item.Product.Cost</td>
                             <td>@item.Amount</td>
-                            <td>@(item.Product.Cost* item.Amount)</td>
+                            <td>@item.Product.Cost</td>
                         </tr>
                     }
                 </tbody>
@@ -36,6 +37,7 @@ else
             </div>
 
             <h3 class="mt-4">Данные для заказа:</h3>
+
             <form action="/order/buy" method="post">
                 <div class="mb-3">
                     <label class="form-label">ФИО</label>
@@ -49,8 +51,13 @@ else
                     <label class="form-label">Телефон</label>
                     <input type="tel" class="form-control" name="phone" required>
                 </div>
-                <button type="submit" class="btn btn-success">Оформить заказ</button>
+
+                <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Buy">Оформить заказ</button>
+
+
+
                 <a class="btn btn-secondary" href="/cart/index">Вернуться в корзину</a>
+
             </form>
         </div>
     </div>
