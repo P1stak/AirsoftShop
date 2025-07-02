@@ -5,10 +5,18 @@ namespace AirsoftShop.Data.Repositories
 {
     public class OrdersInMemoryRepository : IOrdersRepository
     {
-        private List<Cart> orders = new List<Cart>();
-        public void Add(Cart cart)
+        private List<Order> _orders = new List<Order>();
+        private int nextId = 1;
+
+        public void Add(Order order)
         {
-            orders.Add(cart);
+            order.Id = nextId++;
+            _orders.Add(order);
+        }
+
+        public List<Order> GetAll()
+        {
+            return _orders;
         }
     }
 }

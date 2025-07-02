@@ -20,11 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
-.cartItemCount {
-    font-size: 0.75rem;
-    margin-left: 2px;
-    vertical-align: top;
-}
+
 .cart-item-count {
     font-size: 0.75rem;
     padding: 2px 6px;

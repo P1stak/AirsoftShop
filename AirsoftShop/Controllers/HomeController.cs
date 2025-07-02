@@ -9,11 +9,13 @@ namespace AirsoftShop.Controllers
     {
         private IProductsRepository _productRepository;
         private ICartsRepository _cartsRepository;
+        private IOrdersRepository _ordersRepository;
 
-        public HomeController(IProductsRepository productRepository, ICartsRepository artsRepository = null)
+        public HomeController(IProductsRepository productRepository, ICartsRepository artsRepository, IOrdersRepository ordersRepository)
         {
             _productRepository = productRepository;
             _cartsRepository = artsRepository;
+            _ordersRepository = ordersRepository;
         }
 
         public IActionResult Index()
@@ -25,6 +27,39 @@ namespace AirsoftShop.Controllers
 
             return View(product);
         }
+        public IActionResult Info()
+        {
+            var orders = _ordersRepository.GetAll();
+            return Json(orders);
+        }
+        public IActionResult UserLogin()
+        {
+            return View();
+        }
+        public IActionResult UserRegistration()
+        {
+            return View();
+        }
+        public IActionResult Admin()
+        {
+            var product = _productRepository.GetAll();
+            return View(product);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
