@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Подтверждение заказа";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <div class="alert alert-success">
+                <h3>Спасибо за покупку, @ViewBag.CustomerName!</h3>
+                <p>Ваш заказ успешно оформлен и будет обработан в ближайшее время.</p>
+            </div>
+
+            <div class="mt-4">
+                <a href="/home/index" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Вернуться к покупкам
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
