@@ -1,31 +1,36 @@
-﻿<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+﻿@model Login
 
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
     <form asp-controller="Account" asp-action="Login" method="post" class="border p-4 rounded" style="width: 300px;">
         <h1 class="text-center">Вход</h1>
 
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Логин</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="UserName">
+            <label asp-for="Email" class="form-label">Логин</label>
+            <input asp-for="Email" class="form-control">
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Пароль</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="Password">
+            <label asp-for="Password" class="form-label">Пароль</label>
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="RememberMe">
-            <label class="form-check-label" for="exampleCheck1">Запомнить меня</label>
+            <input asp-for="RememberMe" class="form-check-input">
+            <label asp-for="RememberMe" class="form-check-label">Запомнить меня</label>
         </div>
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary" asp-controller="Account" asp-action="Login">Войти</button>
+            <button type="submit" class="btn btn-primary">Войти</button>
         </div>
 
         <div class="d-flex justify-content-center mt-2">
             <a href="/account/register" class="text-muted">Зарегистрироваться</a>
         </div>
-
     </form>
-
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
