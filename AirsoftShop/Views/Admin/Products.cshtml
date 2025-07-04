@@ -1,0 +1,37 @@
+﻿@model List<Product>
+
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+
+    <div class="col-9">
+        <h3 class="text-center mb-4">Список товаров</h3>
+
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Изображение</th>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@product.ImageUrl" width="50" height="50" class="img-thumbnail" />
+                        </td>
+                        <td>@product.Id</td>
+                        <td>
+                            <a href="/product/index/@product.Id">@product.Name</a>
+                        </td>
+                        <td>@product.Descriprion</td>
+                        <td>@product.Cost.ToString("N2") ₽</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

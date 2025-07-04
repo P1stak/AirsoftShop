@@ -38,26 +38,23 @@ else
 
             <h3 class="mt-4">Данные для заказа:</h3>
 
-            <form action="/order/buy" method="post">
+            <form method="post">
                 <div class="mb-3">
                     <label class="form-label">ФИО</label>
-                    <input type="text" class="form-control" name="fullName" required>
+                    <input type="text" class="form-control" name="Name" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Адрес доставки</label>
-                    <input type="text" class="form-control" name="address" required>
+                    <input type="text" class="form-control" name="Address" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" class="form-control" name="phone" required>
+                    <input type="tel" class="form-control" name="Phone" required>
                 </div>
 
+
                 <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Buy">Оформить заказ</button>
-
-
-
                 <a class="btn btn-secondary" href="/cart/index">Вернуться в корзину</a>
-
             </form>
         </div>
     </div>

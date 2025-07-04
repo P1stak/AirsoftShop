@@ -27,11 +27,6 @@ namespace AirsoftShop.Controllers
 
             return View(product);
         }
-        public IActionResult Info()
-        {
-            var orders = _ordersRepository.GetAll();
-            return Json(orders);
-        }
         public IActionResult UserLogin()
         {
             return View();
