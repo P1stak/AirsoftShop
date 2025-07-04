@@ -20,41 +20,18 @@ namespace AirsoftShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Buy(Order orderData)
+        public IActionResult Buy(UserDeliveryInfo user)
         {
-            var cart = _cartsRepository.TryGetByUserId(Constants.UserId);
-
-            if (cart == null || cart.Items.Count == 0)
-            {
-                return RedirectToAction("Index");
-            }
-
+            var existingCart = _cartsRepository.TryGetByUserId(Constants.UserId);
             var order = new Order
-            {
-                Id = orderData.Id,
-                FullName = orderData.FullName,
-                Address = orderData.Address,
-                Phone = orderData.Phone,
-                OrderDate = orderData.OrderDate,
-                Cost = orderData.Cost,
-                Items = cart.Items.Select(item => new CartItem
-                {
-                    Id = item.Id,
-                    Product = item.Product,
-                    Amount = item.Amount
-                }).ToList()
+            { 
+                User = user,
+                Items = existingCart.Items
             };
-
             _ordersRepository.Add(order);
             _cartsRepository.Clear(Constants.UserId);
 
-            return RedirectToAction("Confirmation", new { name = order.FullName });
-        }
-
-        public IActionResult Confirmation(string name)
-        {
-            ViewBag.CustomerName = name;
-            return View();
+            return View(order);
         }
     }
 }
