@@ -2,7 +2,9 @@
 
 <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
     <form asp-controller="Account" asp-action="Login" method="post" class="border p-4 rounded" style="width: 300px;">
-        <h1 class="text-center">Вход</h1>
+        <h1 class="text-center mb-4">Вход</h1>
+
+        <div class="text-danger form-text-weight-bold" asp-validation-summary="ModelOnly"></div>
 
         <div class="mb-3">
             <label asp-for="Email" class="form-label">Логин</label>
@@ -12,7 +14,7 @@
 
         <div class="mb-3">
             <label asp-for="Password" class="form-label">Пароль</label>
-            <input asp-for="Password" class="form-control">
+            <input asp-for="Password" type="password" class="form-control">
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
@@ -21,13 +23,9 @@
             <label asp-for="RememberMe" class="form-check-label">Запомнить меня</label>
         </div>
 
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Войти</button>
-        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-2">Войти</button>
 
-        <div class="d-flex justify-content-center mt-2">
-            <a href="/account/register" class="text-muted">Зарегистрироваться</a>
-        </div>
+        <a href="/account/register" class="text-muted d-block text-center">Зарегистрироваться</a>
     </form>
 </div>
 
