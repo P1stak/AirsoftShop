@@ -22,7 +22,13 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public IActionResult Buy(UserDeliveryInfo user)
         {
+
             var existingCart = _cartsRepository.TryGetByUserId(Constants.UserId);
+
+            if (!ModelState.IsValid)
+            {
+                return View("Index", existingCart);
+            }
             var order = new Order
             { 
                 User = user,
@@ -31,7 +37,9 @@ namespace AirsoftShop.Controllers
             _ordersRepository.Add(order);
             _cartsRepository.Clear(Constants.UserId);
 
-            return View(order);
+
+            ViewBag.CustomerName = user.Name;
+            return View("Buy");
         }
     }
 }
