@@ -4,6 +4,9 @@
     <form asp-controller="Account" asp-action="Register" method="post" class="border p-4 rounded" style="width: 300px;">
         <h1 class="text-center mb-4">Регистрация</h1>
 
+        <div class="text-danger form-text-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+
         <div class="mb-3">
             <label asp-for="Email" class="form-label">Email</label>
             <input asp-for="Email" class="form-control">

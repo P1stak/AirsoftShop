@@ -1,13 +1,14 @@
 ﻿@model Cart
 
-@if (Model == null || Model.Items.Count == 0)
+@if (Model?.Items?.Count == 0)
 {
-    <h3>Корзина пуста</h3>
-    <a class="btn btn-primary align-content-center" href="/home/index">Вернуться к покупкам</a>
+    <div class="text-center">
+        <h3>Корзина пуста</h3>
+        <a class="btn btn-primary" href="/home/index">Вернуться к покупкам</a>
+    </div>
 }
 else
 {
-    
     <div class="row">
         <div class="col">
             <h3>Ваш заказ:</h3>
@@ -15,7 +16,7 @@ else
                 <thead>
                     <tr>
                         <th>Название</th>
-                        <th>Цена (руб.)</th>
+                        <th>Цена</th>
                         <th>Количество</th>
                         <th>Сумма</th>
                     </tr>
@@ -25,36 +26,42 @@ else
                     {
                         <tr>
                             <td>@item.Product.Name</td>
-                            <td>@item.Product.Cost</td>
+                            <td>@item.Product.Cost ₽</td>
                             <td>@item.Amount</td>
-                            <td>@item.Product.Cost</td>
+                            <td>@item.Cost ₽</td>
                         </tr>
                     }
                 </tbody>
             </table>
+            
             <div class="text-end">
-                <h4>Итого: @Model.Cost руб.</h4>
+                <h4>Итого: @Model.Cost ₽</h4>
             </div>
 
             <h3 class="mt-4">Данные для заказа:</h3>
 
-            <form method="post">
+            <form method="post" asp-controller="Order" asp-action="Buy">
+
                 <div class="mb-3">
                     <label class="form-label">ФИО</label>
-                    <input type="text" class="form-control" name="Name" required>
+                    <input type="text" class="form-control" asp-for="User.Name">
+                    <span asp-validation-for="User.Name" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Адрес доставки</label>
-                    <input type="text" class="form-control" name="Address" required>
+                    <input type="text" class="form-control" asp-for="User.Address">
+                    <span asp-validation-for="User.Address" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" class="form-control" name="Phone" required>
+                    <input type="tel" class="form-control" asp-for="User.Phone">
+                    <span asp-validation-for="User.Phone" class="text-danger"></span>
                 </div>
 
-
-                <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Buy">Оформить заказ</button>
-                <a class="btn btn-secondary" href="/cart/index">Вернуться в корзину</a>
+                <div class="d-grid gap-2 d-md-block">
+                    <button class="btn btn-success" type="submit">Оформить заказ</button>
+                    <a class="btn btn-secondary" href="/cart/index">Вернуться в корзину</a>
+                </div>
             </form>
         </div>
     </div>
