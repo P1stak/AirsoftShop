@@ -1,4 +1,5 @@
 ﻿using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirsoftShop.Controllers
@@ -6,15 +7,29 @@ namespace AirsoftShop.Controllers
     public class AdminController : Controller
     {
         private IProductsRepository _productsRepository;
+        private IOrdersRepository _ordersRepository;
 
-        public AdminController(IProductsRepository productsRepository)
+        public AdminController(IProductsRepository productsRepository, IOrdersRepository ordersRepository)
         {
             _productsRepository = productsRepository;
+            _ordersRepository = ordersRepository;
         }
 
         public IActionResult Orders()
         {
-            return View();
+            var order = _ordersRepository.GetAll();
+            return View(order);
+        }
+        public IActionResult OrderDetails(Guid orderId)
+        {
+            var order = _ordersRepository.TryGetById(orderId);
+            return View(order);
+        }
+        public IActionResult UpdateOrderStatus(Guid orderId, OrderStatus status)
+        {
+            _ordersRepository.UpdateStatus(orderId, status);
+            return RedirectToAction("Orders");
+
         }
         public IActionResult Users()
         {
@@ -28,6 +43,49 @@ namespace AirsoftShop.Controllers
         {
             var products = _productsRepository.GetAll();
             return View(products);
+        }
+
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddProduct(Product product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+            _productsRepository.Add(product);
+            return RedirectToAction("Products");
+        }
+
+        public IActionResult EditProduct(int productId)
+        {
+            var product = _productsRepository.TryGetById(productId);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(Product product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+            _productsRepository.Update(product);
+            return RedirectToAction("Products");
+        }
+
+
+        public IActionResult DeleteProduct(int productId)
+        {
+            var product = _productsRepository.TryGetById(productId);
+            if (product != null)
+            {
+                _productsRepository.GetAll().Remove(product);
+            }
+            return RedirectToAction("Products");
         }
     }
 }

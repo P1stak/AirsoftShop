@@ -11,5 +11,25 @@ namespace AirsoftShop.Data.Repositories
         {
             _orders.Add(order);
         }
+
+        public List<Order> GetAll()
+        {
+            return _orders;
+        }
+
+        public Order TryGetById(Guid orderId)
+        {
+            return _orders.FirstOrDefault(x => x.Id == orderId);
+        }
+
+        public void UpdateStatus(Guid orderId, OrderStatus newStatus)
+        {
+            var order = TryGetById(orderId);
+
+            if (order != null)
+            {
+                order.Status = newStatus;
+            }
+        }
     }
 }

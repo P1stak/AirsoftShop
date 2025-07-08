@@ -19,6 +19,16 @@ namespace AirsoftShop.Data.Repositories
             new Product("Fenix AER-03", 1200, "Выносная тактическая кнопка Fenix AER-03 v2.0", "/images/aer.jpg"),
             new Product("Г52Д", 4500 , "Гильза Г52Д для гранатомёта страйкбольного Pyrosof", "/images/G52D.jpg"),
         };
+
+        public void Add(Product product)
+        {
+            products.Add(product);
+        }
+        public void Delete(int productId)
+        {
+            var res = products.FirstOrDefault(x => x.Id == productId);
+        }
+
         public List<Product> GetAll()
         {
             return products;
@@ -27,6 +37,19 @@ namespace AirsoftShop.Data.Repositories
         public Product? TryGetById(int id)
         {
             return products.FirstOrDefault(p => p.Id == id);
+        }
+        public void Update(Product product)
+        {
+            var existingproduct = products.FirstOrDefault(x => x.Id == product.Id);
+            if (existingproduct == null)
+            {
+                return;
+            }
+
+            existingproduct.Name = product.Name;
+            existingproduct.Descriprion = product.Descriprion;
+            existingproduct.Cost = product.Cost;
+            existingproduct.ImageUrl = product.ImageUrl;
         }
     }
 }

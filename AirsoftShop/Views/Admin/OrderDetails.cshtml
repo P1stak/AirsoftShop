@@ -1,0 +1,106 @@
+﻿@model Order
+
+<style>
+    .order-detail-page {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+    }
+
+    .order-header {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+    .order-section {
+        background-color: white;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .order-table th, .order-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .order-table tr:last-child td {
+            border-bottom: none;
+        }
+
+    .save-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+        .save-button:hover {
+            background-color: #218838;
+        }
+</style>
+
+<div class="order-detail-page">
+    <div class="order-header">
+        <h2>Детали заказа</h2>
+    </div>
+
+    <div class="order-section">
+        <form method="post">
+            <table class="order-table">
+                <tr>
+                    <th>Дата и время</th>
+                    <td>@Model.CreateDateTime.ToString()</td>
+                </tr>
+
+                <tr>
+                    <th>Адрес доставки</th>
+                    <td>@Model.User.Address</td>
+                </tr>
+
+                <tr>
+                    <th>Получатель</th>
+                    <td>@Model.User.Name</td>
+                </tr>
+
+                <tr>
+                    <th>Телефон</th>
+                    <td>@Model.User.Phone</td>
+                </tr>
+
+                <tr>
+                    <th>Статус заказа</th>
+                    <td>
+                        <select asp-for="@Model.Status"
+                                asp-items="@Html.GetEnumSelectList<OrderStatus>()"
+                                class="form-control-sm">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <button class="save-button" type="submit" asp-controller="Admin" asp-action="UpdateOrderStatus" asp-route-orderId="@Model.Id">Обновить</button>
+        </form>
+    </div>
+</div>
