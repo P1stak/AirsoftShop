@@ -6,5 +6,8 @@ namespace AirsoftShop.Data.Interfaces
     {
         List<Product> GetAll();
         Product? TryGetById(int id);
+        void Add(Product product);
+        void Delete(int id);
+        void Update(Product product);
     }
 }

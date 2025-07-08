@@ -27,7 +27,7 @@ else
                     {
                         <tr>
                             <td>@item.Product.Name</td>
-                            <td>@item.Product.Cost</td>
+                            <td>@item.Product.Cost ₽</td>
 
                             <td>
                                 <a class="btn btn-sm btn-secondary" href="/cart/DecreaseAmount?productId=@item.Product.Id" role="button">-</a>
@@ -35,7 +35,7 @@ else
                                 <a class="btn btn-sm btn-secondary" href="/cart/Add?productId=@item.Product.Id" role="button">+</a>
                             </td>
 
-                            <td>@item.Cost</td>
+                            <td>@item.Cost ₽</td>
                         </tr>
                     }
                 </tbody>

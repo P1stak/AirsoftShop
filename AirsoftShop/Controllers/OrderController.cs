@@ -30,7 +30,7 @@ namespace AirsoftShop.Controllers
                 return View("Index", existingCart);
             }
             var order = new Order
-            { 
+            {
                 User = user,
                 Items = existingCart.Items
             };
@@ -39,6 +39,7 @@ namespace AirsoftShop.Controllers
 
 
             ViewBag.CustomerName = user.Name;
+            
             return View("Buy");
         }
     }
