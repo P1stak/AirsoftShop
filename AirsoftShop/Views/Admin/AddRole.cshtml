@@ -1,0 +1,20 @@
+﻿@model Role
+
+<form method="post">
+    <div>
+        <h3>Создание новой роли</h3>
+    </div>
+
+    <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="Name"></label><br />
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name"  />
+        </div>
+    </div>
+    <div>
+        <button class="save-button" type="submit" asp-controller="Admin" asp-action="AddRole" asp-route-orderId="@Model.Name">Сохранить</button>
+    </div>
+</form>

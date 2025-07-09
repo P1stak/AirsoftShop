@@ -14,6 +14,7 @@ builder.Services.AddControllersWithViews().AddViewOptions(options =>
 builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>();
 builder.Services.AddSingleton<ICartsRepository, CartsInMemoryRepository>();
 builder.Services.AddSingleton<IOrdersRepository, OrdersInMemoryRepository>();
+builder.Services.AddSingleton<IRolesInMemoryRepository, RolesInMemoryRepository>();
 
 var app = builder.Build();
 
