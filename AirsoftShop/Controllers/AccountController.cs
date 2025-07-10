@@ -7,10 +7,14 @@ namespace AirsoftShop.Controllers
     public class AccountController : Controller
     {
         private IProductsRepository _productsRepository;
+        private ILogger<AccountController> _logger;
 
-        public AccountController(IProductsRepository productsRepository)
+        public AccountController(IProductsRepository productsRepository, ILogger<AccountController> logger)
         {
             _productsRepository = productsRepository;
+            _logger = logger;
+            _logger.LogInformation("AccountController controller called");
+
         }
         [HttpGet]
         public IActionResult Login()
@@ -21,6 +25,7 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public IActionResult Login(Login login)
         {
+            _logger.LogInformation("Login get method Starting.");
             if (ModelState.IsValid)
             {
                 return RedirectToAction("Index", "Home");
@@ -37,6 +42,8 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public IActionResult Register(Register registration)
         {
+            _logger.LogInformation("Register get method Starting.");
+
             if (registration.Email.Contains(registration.Password))
             {
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
