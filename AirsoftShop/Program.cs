@@ -1,9 +1,10 @@
 using AirsoftShop.Data.Interfaces;
 using AirsoftShop.Data.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration)); // Serilog
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddControllersWithViews().AddViewOptions(options =>
@@ -18,14 +19,13 @@ builder.Services.AddSingleton<IRolesInMemoryRepository, RolesInMemoryRepository>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+app.UseSerilogRequestLogging(); // Serilog
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
