@@ -94,7 +94,7 @@
             <div class="admin-content">
                 <h3 class="text-center mb-4">Список товаров</h3>
 
-                <button class="add-product-btn" onclick="location.href='/Admin/AddProduct'">Добавить новый товар</button>
+                <a class="add-product-btn" asp-area="Admin" asp-controller="Product" asp-action="Add">Добавить новый товар</a>
 
                 <table class="product-table">
                     <thead>
@@ -119,8 +119,8 @@
                                 <td>@product.Descriprion</td>
                                 <td>@product.Cost ₽</td>
                                 <td>
-                                    <a href="/Admin/EditProduct?productId=@product.Id" class="btn btn-sm btn-warning">Редактировать</a>
-                                    <a href="/Admin/DeleteProduct?productId=@product.Id" class="btn btn-sm btn-danger">Удалить</a>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-productId="@product.Id" class="btn btn-sm btn-warning">Редактировать</a>
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-productId="@product.Id" class="btn btn-sm btn-danger">Удалить</a>
                                 </td>
                             </tr>
                         }

@@ -1,5 +1,5 @@
-﻿using AirsoftShop.Data.Interfaces;
-using AirsoftShop.Models;
+﻿using AirsoftShop.Areas.Admin.Models;
+using AirsoftShop.Data.Interfaces;
 
 namespace AirsoftShop.Data.Repositories
 {

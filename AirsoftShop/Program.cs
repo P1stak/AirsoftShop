@@ -1,7 +1,9 @@
 using AirsoftShop.Data.Interfaces;
 using AirsoftShop.Data.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration)); // Serilog
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -26,16 +28,31 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
+app.UseSerilogRequestLogging(); // Serilog
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
-app.MapControllerRoute(
+
+//app.MapControllerRoute(
+//    name: "Area",
+//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "Area",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+});
 
 app.Run();

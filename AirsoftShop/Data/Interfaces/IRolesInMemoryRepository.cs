@@ -1,4 +1,4 @@
-﻿using AirsoftShop.Models;
+﻿using AirsoftShop.Areas.Admin.Models;
 
 namespace AirsoftShop.Data.Interfaces
 {
