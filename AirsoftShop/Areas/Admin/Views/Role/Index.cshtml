@@ -94,7 +94,7 @@
             <div class="admin-content">
                 <h3 class="text-center mb-4">Список ролей</h3>
 
-                <a href="/Admin/AddRole" class="btn btn-sm btn-warning">Добавить роль</a>
+                <a asp-area="Admin" asp-controller="Role" asp-action="Add" class="btn btn-sm btn-warning">Добавить роль</a>
 
                 <table class="product-table">
                     <thead>
@@ -110,7 +110,7 @@
                             <tr>
                                 <td>@(i + 1)</td>
                                 <td>@Model[i].Name</td>
-                                <td><a class="btn btn-danger" href="/Admin/RemoveRole?roleName=@Model[i].Name">Удалить</a></td>
+                                <td><a class="btn btn-danger" asp-area="Admin" asp-controller="Role" asp-action="Delete" asp-route-roleName="@Model[i].Name">Удалить</a></td>
                             </tr>
                         }
                     </tbody>

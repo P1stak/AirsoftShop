@@ -70,6 +70,11 @@
         gap: 10px;
         margin-top: 20px;
     }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+    }
 </style>
 
 <div class="admin-panel">
@@ -78,9 +83,11 @@
 
         <div class="col-9">
             <div class="admin-content">
-                <h3 class="text-center mb-4">Добавление нового товара</h3>
+                <h3 class="text-center mb-4">Редактирование товара</h3>
 
-                <form method="post" asp-controller="Admin" asp-action="AddProduct">
+                <form method="post" asp-area="Admin" asp-controller="Product" asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
+
                     <div class="form-group">
                         <label asp-for="Name">Название товара</label>
                         <input asp-for="Name" class="form-control" required />
@@ -106,8 +113,8 @@
                     </div>
 
                     <div class="form-buttons">
-                        <button type="submit" class="btn btn-danger">Добавить товар</button>
-                        <a href="/admin/products" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-danger">Сохранить изменения</button>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-secondary">Отмена</a>
                     </div>
                 </form>
             </div>

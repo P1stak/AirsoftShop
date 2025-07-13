@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirsoftShop.Models
+namespace AirsoftShop.Areas.Admin.Models
 {
     public class Role
     {

@@ -15,6 +15,6 @@
         </div>
     </div>
     <div>
-        <button class="save-button" type="submit" asp-controller="Admin" asp-action="AddRole" asp-route-orderId="@Model.Name">Сохранить</button>
+        <button class="save-button" type="submit" asp-area="Admin" asp-controller="Role" asp-action="Add" asp-route-orderId="@Model.Name">Сохранить</button>
     </div>
 </form>

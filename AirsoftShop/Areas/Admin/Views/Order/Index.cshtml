@@ -108,7 +108,7 @@
                                     <td class="text-center">#</td>
                                     <td class="text-center">@Model[i].CreateDateTime.ToString("dd.MM.yyyy")</td>
                                     <td class="text-center">@Model[i].CreateDateTime.ToString("HH:MM:s")</td>
-                                    <td class="text-center"><a href="/Admin/OrderDetails?orderId=@Model[i].Id" class="btn btn-sm btn-warning">Подробнее</a></td>
+                                    <td class="text-center"><a asp-area="Admin" asp-controller="Order" asp-action="Detail" asp-route-orderId="@Model[i].Id" class="btn btn-sm btn-warning">Подробнее</a></td>
                                 </tr>
                             }
                         </tbody>

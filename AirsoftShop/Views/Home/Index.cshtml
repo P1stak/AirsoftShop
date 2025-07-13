@@ -10,7 +10,7 @@
 <div class="products-grid-container">
     @foreach (var product in Model)
     {
-        <a href="/product/index/@product.Id" class="product-card-square">
+        <a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@product.Id" class="product-card-square">
             <div class="product-image-wrapper">
                 <img class="product-image-square" src="@product.ImageUrl" alt="@product.Name">
             </div>
