@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>()
 builder.Services.AddSingleton<ICartsRepository, CartsInMemoryRepository>();
 builder.Services.AddSingleton<IOrdersRepository, OrdersInMemoryRepository>();
 builder.Services.AddSingleton<IRolesInMemoryRepository, RolesInMemoryRepository>();
+builder.Services.AddSingleton<IUserManager, UserManager>();
 
 var app = builder.Build();
 

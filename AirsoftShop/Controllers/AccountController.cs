@@ -6,13 +6,13 @@ namespace AirsoftShop.Controllers
 {
     public class AccountController : Controller
     {
-        private IProductsRepository _productsRepository;
+        private IUserManager _userManager;
 
-        public AccountController(IProductsRepository productsRepository)
+        public AccountController(IUserManager userManager)
         {
-            _productsRepository = productsRepository;
+            _userManager = userManager;
         }
-        [HttpGet]
+
         public IActionResult Login()
         {
             return View();
@@ -21,14 +21,25 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public IActionResult Login(Login login)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return RedirectToAction(nameof(Register));
+
+            var userAccount = _userManager.TryGetByName(login.Email);
+            if (userAccount == null)
             {
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError("", "Такого пользователя не cуществует");
+                return RedirectToAction(nameof(Register));
             }
-            return RedirectToAction("Login");
+
+            if (userAccount.Password != login.Password)
+            {
+                ModelState.AddModelError("", "Не правильный пароль");
+                return RedirectToAction(nameof(Register));
+            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -37,15 +48,22 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public IActionResult Register(Register registration)
         {
-            if (registration.Email.Contains(registration.Password))
+            if (registration.Email == registration.Password)
             {
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
             }
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                _userManager.Add(new UserAccount
+                {
+                    Email = registration.Email,
+                    Phone = registration.Phone,
+                    Password = registration.Password,
+                    UserFullName = registration.UserFullName
+                });
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            return RedirectToAction("Register");
+            return RedirectToAction(nameof(Register));
         }
     }
 }

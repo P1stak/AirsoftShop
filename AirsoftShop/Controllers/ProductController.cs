@@ -6,12 +6,10 @@ namespace AirsoftShop.Controllers
     public class ProductController : Controller
     {
         private IProductsRepository _productsRepository;
-        private ICartsRepository _cartsRepository;
 
-        public ProductController(IProductsRepository productsRepository, ICartsRepository cartsRepository)
+        public ProductController(IProductsRepository productsRepository)
         {
             _productsRepository = productsRepository;
-            _cartsRepository = cartsRepository;
         }
 
         public IActionResult Index(int id)
