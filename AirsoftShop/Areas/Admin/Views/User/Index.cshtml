@@ -1,4 +1,4 @@
-﻿
+﻿@model List<UserAccount>
 
 <style>
     .admin-panel {
@@ -84,18 +84,37 @@
         <div class="col-9">
             <div class="admin-content">
                 <h3 class="text-center mb-4">Список пользователей</h3>
-
-                <table class="user-table">
-                    <thead>
-                        <tr>
-                            #
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <th>#</th>
-                    </tbody>
-                </table>
                 
+                @if (Model == null || Model.Count == 0)
+                {
+                    <h6 class="text-primary text-center mb-4" style="--bs-text-opacity: .5;">Пока список пользователей пуст</h6>
+                }
+                else
+                {
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>Логин(Email)</th>
+                                <th>Имя</th>
+                                <th>Телефон</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var item in Model)
+                                {
+                                    <td>@item.Email</td>
+                                    <td>@item.UserFullName.Split()[1]</td>
+                                    <td>@item.Phone</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-userName="@item.UserFullName">Подробнее</a>
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                }
             </div>
         </div>
     </div>

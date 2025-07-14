@@ -25,6 +25,18 @@
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
 
+        <div class="mb-3">
+            <label asp-for="UserFullName" class="form-label">ФИО</label>
+            <input asp-for="UserFullName" class="form-control">
+            <span asp-validation-for="UserFullName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label">Телефон</label>
+            <input asp-for="Phone" class="form-control">
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
         <button type="submit" class="btn btn-primary w-100 mb-2">Зарегистрироваться</button>
 
         <a href="/Account/Login" class="text-muted d-block text-center">Уже зарегистрированы? Войти</a>
