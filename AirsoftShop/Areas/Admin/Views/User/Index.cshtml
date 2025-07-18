@@ -94,24 +94,33 @@
                     <table class="user-table">
                         <thead>
                             <tr>
-                                <th>Логин(Email)</th>
+                                <th>Логин (Email)</th>
                                 <th>Имя</th>
                                 <th>Телефон</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                @foreach (var item in Model)
-                                {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
                                     <td>@item.Email</td>
-                                    <td>@item.UserFullName.Split()[1]</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.UserFullName) && item.UserFullName.Split(' ').Length >= 2)
+                                        {
+                                            @item.UserFullName.Split(' ')[1]
+                                        }
+                                        else
+                                        {
+                                            <text>Не указано</text>
+                                        }
+                                    </td>
                                     <td>@item.Phone</td>
                                     <td>
                                         <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-userName="@item.UserFullName">Подробнее</a>
                                     </td>
-                                }
-                            </tr>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 }
