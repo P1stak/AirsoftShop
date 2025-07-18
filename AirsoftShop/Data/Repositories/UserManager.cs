@@ -23,7 +23,16 @@ namespace AirsoftShop.Data.Repositories
         public void ChangePassword(string userName, string newPassword)
         {
             var account = TryGetByName(userName);
-            account.Password = newPassword;
+            if (account != null)
+            {
+                account.Password = newPassword;
+            }
+        }
+
+        public void Delete(string userName)
+        {
+            var user = _users.FirstOrDefault(x => x.UserFullName == userName);
+            _users.Remove(user);
         }
     }
 }

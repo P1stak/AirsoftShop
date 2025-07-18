@@ -8,5 +8,6 @@ namespace AirsoftShop.Data.Interfaces
         void ChangePassword(string userName, string newPassword);
         List<UserAccount> GetAll();
         UserAccount TryGetByName(string name);
+        void Delete(string userName);
     }
 }
