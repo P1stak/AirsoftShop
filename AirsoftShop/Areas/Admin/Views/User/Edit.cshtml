@@ -1,0 +1,36 @@
+﻿@model UserAccount
+
+<form method="post">
+    <div>
+        <h3>Смена пароля пользователя</h3>
+    </div>
+
+    <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+
+    <input type="hidden" name="userName" value="@Model.Email" />
+
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="Email"></label><br />
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="UserFullName"></label><br />
+            <input class="form-control" asp-for="UserFullName" />
+            <span asp-validation-for="UserFullName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="Phone"></label><br />
+            <input class="form-control" asp-for="Phone" />
+            <span asp-validation-for="Phone" />
+        </div>
+    </div>
+    <div>
+        <button type="submit" asp-area="Admin" asp-controller="User" asp-action="Edit">Сменить данные</button>
+    </div>
+</form>

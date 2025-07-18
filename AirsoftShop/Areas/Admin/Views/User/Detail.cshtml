@@ -128,20 +128,9 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-userName="@Model.UserFullName">Смена пароля</a>
-                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-userName="@Model.UserFullName">Редактирование данных</a>
-                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Role" asp-route-userName="@Model.UserFullName">Права доступа</a>
                         <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userName="@Model.UserFullName">Удалить</a>
                     </div>
                 </div>
-
-                <button class="action-button btn-update"
-                        type="submit"
-                        asp-area="Admin"
-                        asp-controller="User"
-                        asp-action="UpdateOrderStatus"
-                        asp-route-userName="@Model.UserFullName">
-                    Обновить
-                </button>
             </div>
     </div>
 </div>

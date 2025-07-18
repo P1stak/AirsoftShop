@@ -1,7 +1,5 @@
 ﻿using AirsoftShop.Areas.Admin.Models;
-using AirsoftShop.Controllers;
 using AirsoftShop.Data.Interfaces;
-using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirsoftShop.Areas.Admin.Contollers
@@ -28,8 +26,8 @@ namespace AirsoftShop.Areas.Admin.Contollers
         }
         public IActionResult ChangePassword(string userName)
         {
-            var changePassword= new ChangePassword()
-            { 
+            var changePassword = new ChangePassword()
+            {
                 UserName = userName
             };
             return View(changePassword);
@@ -38,22 +36,24 @@ namespace AirsoftShop.Areas.Admin.Contollers
         [HttpPost]
         public IActionResult ChangePassword(ChangePassword changePassword)
         {
+            if (changePassword.UserName == changePassword.Password)
             {
-                if (changePassword.UserName == changePassword.Password)
-                {
-                    ModelState.AddModelError("", "Логин и пароль не должны совпадать");
-                }
-                if (ModelState.IsValid)
-                {
-                    _userManager.ChangePassword(changePassword.UserName, changePassword.Password);
-
-
-                    return RedirectToAction(nameof(Index));
-                }
-                return RedirectToAction(nameof(ChangePassword));
-
+                ModelState.AddModelError("", "Логин и пароль не должны совпадать");
             }
-        }
+            if (ModelState.IsValid)
+            {
+                _userManager.ChangePassword(changePassword.UserName, changePassword.Password);
 
+
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(ChangePassword));
+
+        }
+        public IActionResult Delete(string userName)
+        {
+            _userManager.Delete(userName);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
