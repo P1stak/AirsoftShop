@@ -89,48 +89,78 @@
     </div>
 
     <div class="order-section">
-            <table class="order-table">
-                <tr>
-                    <td>Логин</td>
-                    <td>@Model.Email</td>
-                </tr>
-                <tr>
-                    <td>Имя</td>
-                    <td>@Model.UserFullName.Split()[1]</td>
-                </tr>
-                <tr>
-                    <td>Фамилия</td>
-                    <td>@Model.UserFullName.Split()[0]</td>
-                </tr>
-                <tr>
-                    <td>Отчество</td>
-                    <td>@Model.UserFullName.Split()[2]</td>
-                </tr>
-                <tr>
-                    <td>Телефон</td>
-                    <td>@Model.Phone</td>
-                </tr>
+        <table class="order-table">
+            <tr>
+                <td>Логин</td>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <td>Имя</td>
+                <td>
+                    @{
+                        var nameParts = Model.UserFullName?.Split(' ');
+                        if (nameParts?.Length >= 2)
+                        {
+                            @nameParts[1]
+                        }
+                        else
+                        {
+                            <text>Не указано</text>
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Фамилия</td>
+                <td>
+                    @if (nameParts?.Length >= 1)
+                    {
+                        @nameParts[0]
+                    }
+                    else
+                    {
+                        <text>Не указано</text>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Отчество</td>
+                <td>
+                    @if (nameParts?.Length >= 3)
+                    {
+                        @nameParts[2]
+                    }
+                    else
+                    {
+                        <text>Не указано</text>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Телефон</td>
+                <td>@Model.Phone</td>
+            </tr>
             <tr>
                 <td>Пароль</td>
                 <td>@Model.Password</td>
             </tr>
-            </table>
+        </table>
 
-            <div class="buttons-container">
-                <div class="dropdown">
-                    <button class="action-button btn-action dropdown-toggle dropdown-toggle-no-arrow"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                        Действия
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-userName="@Model.UserFullName">Смена пароля</a>
-                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userName="@Model.UserFullName">Удалить</a>
-                    </div>
+        <div class="buttons-container">
+            <div class="dropdown">
+                <button class="action-button btn-action dropdown-toggle dropdown-toggle-no-arrow"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    Действия
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-userName="@Model.UserFullName">Смена пароля</a>
+                    <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userName="@Model.UserFullName">Удалить</a>
                 </div>
             </div>
+        </div>
     </div>
 </div>

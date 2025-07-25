@@ -9,7 +9,7 @@ namespace AirsoftShop.Models
 
         [RegularExpression(@"^[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+$",
         ErrorMessage = "ФИО должно быть в формате 'Фамилия Имя Отчество' (кириллица, каждое слово с заглавной буквы)")]
-        public string UserFullName { get; set; }
+        public string? UserFullName { get; set; }
 
         public string Phone { get; set; }
     }
