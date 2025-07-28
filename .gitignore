@@ -361,3 +361,21 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/AirsoftShop/Views/Product/Catalog.cshtml
+/AirsoftShop/Views/Shared/Components/Cart/Default.cshtml
+/AirsoftShop/Views/Shared/_CartPanel.cshtml
+/AirsoftShop/Views/Shared/_LoginModal.cshtml
+/AirsoftShop/wwwroot/css/sniper.css
+/AirsoftShop/wwwroot/images/logo.jpg
+/AirsoftShop/wwwroot/js/sniper.js
+/AirsoftShop/full_source.txt
+/.gitignore
+/AirsoftShop/full_source.txt
+*.dockerignore
+/Dockerfile
+/test.txt
+/test.txt.bak
+/.gitignore
+/AirsoftShop/full_source.txt
+/.gitignore
+/.gitignore
