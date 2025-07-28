@@ -1,12 +1,14 @@
-﻿@model Cart
+﻿@model CartViewModel
 
 <link rel="stylesheet" href="~/css/site.css" />
 
 @if (Model == null || Model.Items.Count == 0)
 {
-    <div class="text-center">
-        <h3>Корзина пуста</h3>
-        <a class="btn btn-primary" href="/home/index">Вернуться к покупкам</a>
+    <div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
+        <div class="text-center">
+            <h3>Корзина пуста</h3>
+            <a class="btn btn-primary" href="/home/index">Вернуться к покупкам</a>
+        </div>
     </div>
 }
 else

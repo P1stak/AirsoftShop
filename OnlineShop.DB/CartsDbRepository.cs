@@ -1,16 +1,20 @@
-﻿using AirsoftShop.Data.Interfaces;
-using AirsoftShop.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.DB.Models;
 
-namespace AirsoftShop.Data.Repositories
+namespace OnlineShop.DB
 {
-    public class CartsInMemoryRepository : ICartsRepository
+    public class CartsDbRepository : ICartsDbRepository
     {
+        private readonly DatabaseContext _databaseContext;
 
-        private List<Cart> carts = new List<Cart>();
+        public CartsDbRepository(DatabaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
 
         public Cart TryGetByUserId(string userId)
         {
-            return carts.FirstOrDefault(c => c.UserId == userId);
+            return _databaseContext.Carts.Include(x => x.Items).ThenInclude(x => x.Product).FirstOrDefault(c => c.UserId == userId);
         }
 
         public void Add(Product product, string userId)
@@ -22,19 +26,19 @@ namespace AirsoftShop.Data.Repositories
             {
                 var newCart = new Cart
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = userId,
-                    Items = new List<CartItem>()
+                    UserId = userId
+                };
+
+                newCart.Items = new List<CartItem>()
+                {
+                    new CartItem
                     {
-                        new CartItem
-                        {
-                            Id = Guid.NewGuid(),
-                            Amount = 1,
-                            Product = product
-                        }
+                        Amount = 1,
+                        Product = product,
+                        Cart = newCart
                     }
                 };
-                carts.Add(newCart);
+                _databaseContext.Carts.Add(newCart);
             }
             else
             {
@@ -49,15 +53,16 @@ namespace AirsoftShop.Data.Repositories
                 {
                     exictingCart.Items.Add(new CartItem
                     {
-                        Id = Guid.NewGuid(),
                         Amount = 1,
-                        Product = product
+                        Product = product,
+                        Cart = exictingCart
                     });
                 }
             }
+            _databaseContext.SaveChanges();
         }
 
-        public void DecreaseAmount(int productId, string userId)
+        public void DecreaseAmount(Guid productId, string userId)
         {
             // получаем существующую позицию в корзине
             var exictingCart = TryGetByUserId(userId);
@@ -77,12 +82,14 @@ namespace AirsoftShop.Data.Repositories
             {
                 exictingCart.Items.Remove(existingCartItem);
             }
+            _databaseContext.SaveChanges();
         }
 
         public void Clear(string userId)
         {
             var exictingCart = TryGetByUserId(userId);
-            carts.Remove(exictingCart);
+            _databaseContext.Carts.Remove(exictingCart);
+            _databaseContext.SaveChanges();
         }
 
     }

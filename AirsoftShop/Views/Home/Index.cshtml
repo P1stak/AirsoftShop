@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model List<ProductViewModel>
 @{
     ViewData["Title"] = "Каталог товаров";
 }
@@ -15,9 +15,12 @@
                 <img class="product-image-square" src="@product.ImageUrl" alt="@product.Name">
             </div>
             <div class="product-info-square">
+                <a class="btn btn-danger" href="/cart/add?productId=@product.Id" role="button">Добавить в корзину</a>
                 <div class="product-title-square" title="@product.Name">@product.Name</div>
                 <div class="product-price-square">@product.Cost ₽</div>
             </div>
+
+
         </a>
     }
 </div>
