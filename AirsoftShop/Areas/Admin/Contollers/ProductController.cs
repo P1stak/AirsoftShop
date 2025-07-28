@@ -1,22 +1,25 @@
-﻿using AirsoftShop.Data.Interfaces;
+﻿using AirsoftShop.Helpers;
 using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
+using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Areas.Admin.Contollers
 {
     [Area("Admin")]
     public class ProductController : Controller
     {
-        private IProductsRepository _productsRepository;
-        public ProductController(IProductsRepository productsRepository)
+        private IProductsDbRepository _productsDbRepository;
+
+        public ProductController(IProductsDbRepository productsDbRepository)
         {
-            _productsRepository = productsRepository;
+            _productsDbRepository = productsDbRepository;
         }
 
         public IActionResult Index()
         {
-            var products = _productsRepository.GetAll();
-            return View(products);
+            var products = _productsDbRepository.GetAll();
+            return View(Mapping.ToProductViewModels(products));
         }
         public IActionResult Add()
         {
@@ -24,37 +27,59 @@ namespace AirsoftShop.Areas.Admin.Contollers
         }
 
         [HttpPost]
-        public IActionResult Add(Product product)
+        public IActionResult Add(ProductViewModel product)
         {
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
-            _productsRepository.Add(product);
+
+            var productDB = new Product
+            {
+                Name = product.Name,
+                Cost = product.Cost,
+                Descriprion = product.Descriprion,
+                ImageUrl = product.ImageUrl
+            };
+
+            _productsDbRepository.Add(productDB);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Edit(int productId)
+        public IActionResult Edit(Guid productId)
         {
-            var product = _productsRepository.TryGetById(productId);
-            return View(product);
+            var product = _productsDbRepository.TryGetById(productId);
+
+            var res = Mapping.ToProductViewModel(product);
+
+            return View(res);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(ProductViewModel product)
         {
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
-            _productsRepository.Update(product);
+
+            var productDB = new Product
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Cost = product.Cost,
+                Descriprion = product.Descriprion,
+                ImageUrl = product.ImageUrl
+            };
+
+            _productsDbRepository.Update(productDB);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete(int productId)
+        public IActionResult Delete(Guid productId)
         {
-            var product = _productsRepository.TryGetById(productId);
+            var product = _productsDbRepository.TryGetById(productId);
             if (product != null)
             {
-                _productsRepository.GetAll().Remove(product);
+                _productsDbRepository.GetAll().Remove(product);
             }
             return RedirectToAction(nameof(Index));
         }

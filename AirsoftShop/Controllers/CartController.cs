@@ -1,41 +1,42 @@
 ﻿using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 
 namespace AirsoftShop.Controllers
 {
     public class CartController : Controller
     {
-        private IProductsRepository _productRepository;
-        private ICartsRepository _cartRepository;
+        private IProductsDbRepository _productsDbRepository;
+        private ICartsDbRepository _cartsDbRepository;
 
-        public CartController(IProductsRepository productRepository, ICartsRepository cartRepository)
+        public CartController(ICartsDbRepository cartsDbRepository, IProductsDbRepository productsDbRepository)
         {
-            _productRepository = productRepository;
-            _cartRepository = cartRepository;
+            _cartsDbRepository = cartsDbRepository;
+            _productsDbRepository = productsDbRepository;
         }
         public IActionResult Index()
         {
-            var cart = _cartRepository.TryGetByUserId(Constants.UserId);
-            return View(cart);
+            var cart = _cartsDbRepository.TryGetByUserId(Constants.UserId);
+            return View(Mapping.ToCartViewModel(cart));
         }
-        public IActionResult Add(int productId)  // +
+        public IActionResult Add(Guid productId)  // +
         {
-            var product = _productRepository.TryGetById(productId);
-            _cartRepository.Add(product, Constants.UserId);
+            var product = _productsDbRepository.TryGetById(productId);
+            _cartsDbRepository.Add(product, Constants.UserId);
             return RedirectToAction("Index");
         }
-        public IActionResult DecreaseAmount(int productId) // -
+        public IActionResult DecreaseAmount(Guid productId) // -
         {
-            var product = _productRepository.TryGetById(productId);
-            _cartRepository.DecreaseAmount(productId, Constants.UserId);
+            var product = _productsDbRepository.TryGetById(productId);
+            _cartsDbRepository.DecreaseAmount(productId, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear()
         {
-            _cartRepository.Clear(Constants.UserId);
+            _cartsDbRepository.Clear(Constants.UserId);
             return RedirectToAction("Index");
         }
 
     }
 }
- 

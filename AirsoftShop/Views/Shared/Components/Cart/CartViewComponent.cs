@@ -1,22 +1,26 @@
-﻿using AirsoftShop.Data.Interfaces;
+﻿using AirsoftShop.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 
 namespace AirsoftShop.Views.Shared.ViewComponents.CartViewComponents
 {
     public class CartViewComponent : ViewComponent
     {
-        private ICartsRepository _cartsRepository;
-        public CartViewComponent(ICartsRepository cartsRepository)
+        private ICartsDbRepository _cartsDbRepository;
+        public CartViewComponent(ICartsDbRepository cartsDbRepository)
         {
-            _cartsRepository = cartsRepository;
+            _cartsDbRepository = cartsDbRepository;
         }
 
         public IViewComponentResult Invoke()
         {
-            var cart = _cartsRepository.TryGetByUserId(Constants.UserId);
-            var productCounts = cart?.Amount ?? 0;
+            var cart = _cartsDbRepository.TryGetByUserId(Constants.UserId);
 
-            return View("Cart", productCounts);
+            var cartViewModel = Mapping.ToCartViewModel(cart);
+
+            var productCount = cartViewModel?.Amount ?? 0;
+
+            return View("Cart", productCount);
         }
     }
 }

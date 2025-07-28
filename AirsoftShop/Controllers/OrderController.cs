@@ -1,21 +1,23 @@
 ﻿using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Helpers;
 using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 
 namespace AirsoftShop.Controllers
 {
     public class OrderController : Controller
     {
-        private ICartsRepository _cartsRepository;
+        private ICartsDbRepository _cartsDbRepository;
         private IOrdersRepository _ordersRepository;
-        public OrderController(ICartsRepository cartsRepository, IOrdersRepository ordersRepository)
+        public OrderController(ICartsDbRepository cartsRepository, IOrdersRepository ordersRepository)
         {
-            _cartsRepository = cartsRepository;
+            _cartsDbRepository = cartsRepository;
             _ordersRepository = ordersRepository;
         }
         public IActionResult Index()
         {
-            var user = _cartsRepository.TryGetByUserId(Constants.UserId);
+            var user = _cartsDbRepository.TryGetByUserId(Constants.UserId);
             return View(user);
         }
 
@@ -23,19 +25,22 @@ namespace AirsoftShop.Controllers
         public IActionResult Buy(UserDeliveryInfo user)
         {
 
-            var existingCart = _cartsRepository.TryGetByUserId(Constants.UserId);
+            var existingCart = _cartsDbRepository.TryGetByUserId(Constants.UserId);
 
             if (!ModelState.IsValid)
             {
                 return View("Index", existingCart);
             }
+
+            var existingCartViewModel = Mapping.ToCartViewModel(existingCart);
+
             var order = new Order
             {
                 User = user,
-                Items = existingCart.Items
+                Items = existingCartViewModel.Items
             };
             _ordersRepository.Add(order);
-            _cartsRepository.Clear(Constants.UserId);
+            _cartsDbRepository.Clear(Constants.UserId);
 
 
             ViewBag.CustomerName = user.Name;
