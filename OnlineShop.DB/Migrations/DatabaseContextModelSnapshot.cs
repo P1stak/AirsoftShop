@@ -155,6 +155,96 @@ namespace OnlineShop.DB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7b8c9d0e-1f2a-3b4c-5d6e-7f8a9b0c1d2e"),
+                            Cost = 23500m,
+                            Description = "Автомат страйкбольный E&L АКС-74 ELS-74 MN Gen2",
+                            ImageUrl = "/images/ak74.jpg",
+                            Name = "АКС-74"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7172-aaf0-b596e6081587"),
+                            Cost = 10000m,
+                            Description = "Страйкбольная штурмовая винтовка Cyma CM.518",
+                            ImageUrl = "/images/cyma518.jpg",
+                            Name = "CM.518"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-72ec-9252-758d4d5f3615"),
+                            Cost = 9000m,
+                            Description = "Автомат страйкбольный G36-C Specna Arms SA-G12 EBB Tan",
+                            ImageUrl = "/images/G36-C.jpg",
+                            Name = "G36-C"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7f5d-a449-36a22b72b3e8"),
+                            Cost = 2500m,
+                            Description = "Пистолет страйкбольный Colt 1911 STTI Green Gas",
+                            ImageUrl = "/images/1911.jpg",
+                            Name = "Colt 1911"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-75ca-988a-60f3a98a9718"),
+                            Cost = 5000m,
+                            Description = "Пистолет-пулемет страйкбольный MP7 R4 WELL Plastic Body",
+                            ImageUrl = "/images/mp7.jpg",
+                            Name = "MP7"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7e5d-904c-e60e6f1a815d"),
+                            Cost = 22000m,
+                            Description = "Пулемет страйкбольный РПК-74М CYMA CM.052А",
+                            ImageUrl = "/images/rpk-74m.jpg",
+                            Name = "РПК-74М"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-704e-9e8b-3a5f4c1d2e7a"),
+                            Cost = 4000m,
+                            Description = "Пистолет страйкбольный WELL Mauser C96 CO2",
+                            ImageUrl = "/images/c96.jpg",
+                            Name = "Mauser C96"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7a5f-8d3e-4c2b1a9d8e6f"),
+                            Cost = 4500m,
+                            Description = "Дробовик EE M56DL Black",
+                            ImageUrl = "/images/M56DL.jpg",
+                            Name = "M56DL"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7b6c-9e2d-3a4f5b6c7d8e"),
+                            Cost = 12000m,
+                            Description = "Подствольный гранатомет Pyrosoft ГП-1 ЗНИЧ",
+                            ImageUrl = "/images/GP1.jpg",
+                            Name = "ГП-1"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7c7d-8e3f-4b5a6d7e8f9a"),
+                            Cost = 1200m,
+                            Description = "Выносная тактическая кнопка Fenix AER-03 v2.0",
+                            ImageUrl = "/images/aer.jpg",
+                            Name = "Fenix AER-03"
+                        },
+                        new
+                        {
+                            Id = new Guid("0198650b-ffda-7d8e-9f4a-5c6b7e8f9a1b"),
+                            Cost = 4500m,
+                            Description = "Гильза Г52Д для гранатомёта страйкбольного Pyrosof",
+                            ImageUrl = "/images/G52D.jpg",
+                            Name = "Г52Д"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShop.DB.Models.CartItem", b =>
