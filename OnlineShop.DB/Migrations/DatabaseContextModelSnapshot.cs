@@ -140,7 +140,7 @@ namespace OnlineShop.DB.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Descriprion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 

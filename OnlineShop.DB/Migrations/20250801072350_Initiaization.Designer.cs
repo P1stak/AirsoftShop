@@ -12,8 +12,8 @@ using OnlineShop.DB;
 namespace OnlineShop.DB.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250801052859_Initialization")]
-    partial class Initialization
+    [Migration("20250801072350_Initiaization")]
+    partial class Initiaization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,7 +143,7 @@ namespace OnlineShop.DB.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Descriprion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 

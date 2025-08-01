@@ -54,12 +54,13 @@ namespace AirsoftShop.Areas.Admin.Contollers
             _productsDbRepository.Update(product.ToProduct());
             return RedirectToAction(nameof(Index));
         }
+
         public IActionResult Delete(Guid productId)
         {
             var product = _productsDbRepository.TryGetById(productId);
             if (product != null)
             {
-                _productsDbRepository.GetAll().Remove(product);
+                _productsDbRepository.Delete(product.Id);
             }
             return RedirectToAction(nameof(Index));
         }
