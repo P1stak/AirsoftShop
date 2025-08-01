@@ -20,8 +20,12 @@ namespace OnlineShop.DB.Data.Repository
         }
         public void Delete(Guid productId)
         {
-            var product = _dbContext.Products.FirstOrDefault(x => x.Id == productId);
-            _dbContext.Remove(product);
+            //var product = _dbContext.Products.FirstOrDefault(x => x.Id == productId);
+            //_dbContext.Remove(product);
+            //_dbContext.SaveChanges();
+
+            var product = TryGetById(productId);
+            _dbContext.Products.Remove(product);
             _dbContext.SaveChanges();
         }
 
