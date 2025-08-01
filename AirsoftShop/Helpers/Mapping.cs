@@ -23,7 +23,7 @@ namespace AirsoftShop.Helpers
                 Id = product.Id,
                 Name = product.Name,
                 Cost = product.Cost,
-                Descriprion = product.Descriprion,
+                Descriprion = product.Description,
                 ImageUrl = product.ImageUrl
             };
         }
@@ -57,7 +57,7 @@ namespace AirsoftShop.Helpers
                 Id = productViewModel.Id,
                 Name = productViewModel.Name,
                 Cost = productViewModel.Cost,
-                Descriprion = productViewModel.Descriprion,
+                Description = productViewModel.Descriprion,
                 ImageUrl = productViewModel.ImageUrl
             };
         }
