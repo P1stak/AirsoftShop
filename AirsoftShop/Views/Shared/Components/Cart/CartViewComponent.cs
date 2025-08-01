@@ -1,8 +1,8 @@
 ﻿using AirsoftShop.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DB;
+using OnlineShop.DB.Data.Interfacees;
 
-namespace AirsoftShop.Views.Shared.ViewComponents.CartViewComponents
+namespace AirsoftShop.Views.Shared.ViewComponents.Cart
 {
     public class CartViewComponent : ViewComponent
     {
@@ -16,7 +16,7 @@ namespace AirsoftShop.Views.Shared.ViewComponents.CartViewComponents
         {
             var cart = _cartsDbRepository.TryGetByUserId(Constants.UserId);
 
-            var cartViewModel = Mapping.ToCartViewModel(cart);
+            var cartViewModel = cart.ToCartViewModel();
 
             var productCount = cartViewModel?.Amount ?? 0;
 

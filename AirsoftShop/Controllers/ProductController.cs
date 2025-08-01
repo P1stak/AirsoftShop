@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DB;
+﻿using AirsoftShop.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB.Data.Interfacees;
 
 namespace AirsoftShop.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductsDbRepository _productsDbRepository;
+        private readonly IProductsDbRepository _productsDbRepository;
 
         public ProductController(IProductsDbRepository productsDbRepository)
         {
@@ -15,7 +16,7 @@ namespace AirsoftShop.Controllers
         public IActionResult Index(Guid productId)
         {
             var product = _productsDbRepository.TryGetById(productId);
-            return View(product);
+            return View(product.ToProductViewModel());
         }
     }
 }

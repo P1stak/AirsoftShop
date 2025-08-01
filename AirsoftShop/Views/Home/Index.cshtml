@@ -2,25 +2,29 @@
 @{
     ViewData["Title"] = "Каталог товаров";
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="~/css/products-grid.css" />
-
 <h1 class="text-center my-4">Каталог товаров</h1>
-
 <div class="products-grid-container">
     @foreach (var product in Model)
     {
-        <a asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@product.Id" class="product-card-square">
+        <div class="product-card">
             <div class="product-image-wrapper">
-                <img class="product-image-square" src="@product.ImageUrl" alt="@product.Name">
+                <img class="product-image" src="@product.ImageUrl" alt="@product.Name">
             </div>
-            <div class="product-info-square">
-                <a class="btn btn-danger" href="/cart/add?productId=@product.Id" role="button">Добавить в корзину</a>
-                <div class="product-title-square" title="@product.Name">@product.Name</div>
-                <div class="product-price-square">@product.Cost ₽</div>
+            <div class="product-info">
+                <div class="product-title text-center">@product.Name</div>
+                <div class="product-description text-center">@product.Descriprion</div>
+                <div class="product-price text-center">@product.Cost ₽</div>
+                <div class="btn-container">
+                    <a class="btn btn-cart" asp-area="" asp-controller="Cart" asp-action="Add" asp-route-productId="@product.Id" role="button">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a class="btn btn-favorite" asp-area="" asp-controller="Favorite" asp-action="Add" asp-route-productId="@product.Id" role="button">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                </div>
             </div>
-
-
-        </a>
+        </div>
     }
 </div>

@@ -2,15 +2,16 @@
 using AirsoftShop.Helpers;
 using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DB;
+using OnlineShop.DB.Data.Interfacees;
+using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Controllers
 {
     public class OrderController : Controller
     {
-        private ICartsDbRepository _cartsDbRepository;
-        private IOrdersRepository _ordersRepository;
-        public OrderController(ICartsDbRepository cartsRepository, IOrdersRepository ordersRepository)
+        private readonly ICartsDbRepository _cartsDbRepository;
+        private readonly IOrdersDbRepository _ordersRepository;
+        public OrderController(ICartsDbRepository cartsRepository, IOrdersDbRepository ordersRepository)
         {
             _cartsDbRepository = cartsRepository;
             _ordersRepository = ordersRepository;
@@ -18,34 +19,34 @@ namespace AirsoftShop.Controllers
         public IActionResult Index()
         {
             var user = _cartsDbRepository.TryGetByUserId(Constants.UserId);
-            return View(user);
+            return View(user.ToCartViewModel());
+
         }
 
         [HttpPost]
-        public IActionResult Buy(UserDeliveryInfo user)
+        public IActionResult Buy(UserDeliveryInfoViewModel user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index", user);
+            }
 
             var existingCart = _cartsDbRepository.TryGetByUserId(Constants.UserId);
 
-            if (!ModelState.IsValid)
-            {
-                return View("Index", existingCart);
-            }
-
-            var existingCartViewModel = Mapping.ToCartViewModel(existingCart);
-
             var order = new Order
             {
-                User = user,
-                Items = existingCartViewModel.Items
+                User = user.ToUser(),
+                Status = OrderStatus.Created,
+                CreateDateTime = DateTime.UtcNow,
+                Items = existingCart.Items
+               
             };
             _ordersRepository.Add(order);
+
             _cartsDbRepository.Clear(Constants.UserId);
-
-
             ViewBag.CustomerName = user.Name;
             
-            return View("Buy");
+            return View(nameof(Buy));
         }
     }
 }

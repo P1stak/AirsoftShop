@@ -2,6 +2,8 @@ using AirsoftShop.Data.Interfaces;
 using AirsoftShop.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DB;
+using OnlineShop.DB.Data.Interfacees;
+using OnlineShop.DB.Data.Repository;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +21,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 
 builder.Services.AddTransient<IProductsDbRepository, ProductsDbRepository>();
 builder.Services.AddTransient<ICartsDbRepository, CartsDbRepository>();
-builder.Services.AddSingleton<IOrdersRepository, OrdersInMemoryRepository>();
+builder.Services.AddTransient<IFavoriteDbRepository, FavoriteDbRepository>();
+builder.Services.AddTransient<IOrdersDbRepository, OrdersDbRepository>();
 builder.Services.AddSingleton<IRolesInMemoryRepository, RolesInMemoryRepository>();
 builder.Services.AddSingleton<IUserManager, UserManager>();
 builder.Services.AddControllersWithViews();

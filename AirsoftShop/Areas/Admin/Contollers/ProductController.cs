@@ -1,7 +1,7 @@
 ﻿using AirsoftShop.Helpers;
 using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DB;
+using OnlineShop.DB.Data.Interfacees;
 using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Areas.Admin.Contollers
@@ -9,7 +9,7 @@ namespace AirsoftShop.Areas.Admin.Contollers
     [Area("Admin")]
     public class ProductController : Controller
     {
-        private IProductsDbRepository _productsDbRepository;
+        private readonly IProductsDbRepository _productsDbRepository;
 
         public ProductController(IProductsDbRepository productsDbRepository)
         {
@@ -19,7 +19,7 @@ namespace AirsoftShop.Areas.Admin.Contollers
         public IActionResult Index()
         {
             var products = _productsDbRepository.GetAll();
-            return View(Mapping.ToProductViewModels(products));
+            return View(products.ToProductViewModels());
         }
         public IActionResult Add()
         {
@@ -34,24 +34,13 @@ namespace AirsoftShop.Areas.Admin.Contollers
                 return View(product);
             }
 
-            var productDB = new Product
-            {
-                Name = product.Name,
-                Cost = product.Cost,
-                Descriprion = product.Descriprion,
-                ImageUrl = product.ImageUrl
-            };
-
-            _productsDbRepository.Add(productDB);
+            _productsDbRepository.Add(product.ToProduct());
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Edit(Guid productId)
         {
             var product = _productsDbRepository.TryGetById(productId);
-
-            var res = Mapping.ToProductViewModel(product);
-
-            return View(res);
+            return View(product.ToProductViewModel());
         }
 
         [HttpPost]
@@ -62,16 +51,7 @@ namespace AirsoftShop.Areas.Admin.Contollers
                 return View(product);
             }
 
-            var productDB = new Product
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Cost = product.Cost,
-                Descriprion = product.Descriprion,
-                ImageUrl = product.ImageUrl
-            };
-
-            _productsDbRepository.Update(productDB);
+            _productsDbRepository.Update(product.ToProduct());
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Delete(Guid productId)

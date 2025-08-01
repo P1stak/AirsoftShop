@@ -11,7 +11,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link text-dark custom-nav-link d-flex align-items-center" href="/">
-                            <i class="fas fa-home me-1"></i> Главная
+                            <i class="fas fa-home me-1"></i>
                         </a>
                     </li>
 
@@ -37,6 +37,15 @@
                             </form>
                         </div>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark custom-nav-link d-flex align-items-center favorite-link" asp-area="" asp-controller="Favorite" asp-action="Index">
+                            <i class="fas fa-heart me-1"></i>
+                            <span class="badge ms-1" id="cartItemCount">@await Component.InvokeAsync("CalcFavoriteProductsCount")</span>
+                        </a>
+                    </li>
+
+
 
                     <li class="nav-item ms-auto">
                         <a class="nav-link text-dark custom-nav-link d-flex align-items-center" asp-area="" asp-controller="Cart" asp-action="index">
@@ -74,5 +83,10 @@
             outline: none;
             box-shadow: none;
         }
+
+        .favorite-link i {
+            color: red;
+        }
+
     </style>
 </header>

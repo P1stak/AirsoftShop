@@ -1,9 +1,9 @@
 ﻿namespace OnlineShop.DB.Models
 {
-    public class CartItem
+    public class FavoriteProduct
     {
         public Guid Id { get; set; }
+        public string userId { get; set; }
         public Product Product { get; set; }
-        public int Amount { get; set; }
     }
 }

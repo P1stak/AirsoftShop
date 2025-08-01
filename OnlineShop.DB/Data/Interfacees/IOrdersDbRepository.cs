@@ -1,8 +1,8 @@
-﻿using AirsoftShop.Models;
+﻿using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Data.Interfaces
 {
-    public interface IOrdersRepository
+    public interface IOrdersDbRepository
     {
         void Add(Order order);
         List<Order> GetAll();

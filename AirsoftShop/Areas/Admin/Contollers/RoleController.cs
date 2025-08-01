@@ -7,7 +7,7 @@ namespace AirsoftShop.Areas.Admin.Contollers
     [Area("Admin")]
     public class RoleController : Controller
     {
-        private IRolesInMemoryRepository _rolesInMemoryRepository;
+        private readonly IRolesInMemoryRepository _rolesInMemoryRepository;
 
         public RoleController(IRolesInMemoryRepository rolesInMemoryRepository)
         {

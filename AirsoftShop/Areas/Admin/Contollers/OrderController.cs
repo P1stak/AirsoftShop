@@ -1,36 +1,35 @@
 ﻿using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Helpers;
 using AirsoftShop.Models;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB.Models;
 
-namespace AirsoftShop.Areas.Admin.Contollers
+namespace AirsoftShop.OnlineShop.DB.Models;
+[Area("Admin")]
+public class OrderController : Controller
 {
-    [Area("Admin")]
-    public class OrderController : Controller
+    private readonly IOrdersDbRepository _ordersRepository;
+    private readonly ILogger<IOrdersDbRepository> _logger;
+
+    public OrderController(IOrdersDbRepository ordersRepository, ILogger<IOrdersDbRepository> logger)
     {
-        private IOrdersRepository _ordersRepository;
-        private ILogger<IOrdersRepository> _logger;
+        _ordersRepository = ordersRepository;
+        _logger = logger;
+    }
 
-        public OrderController(IOrdersRepository ordersRepository, ILogger<IOrdersRepository> logger)
-        {
-            _ordersRepository = ordersRepository;
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            var order = _ordersRepository.GetAll();
-            return View(order);
-        }
-        public IActionResult Detail(Guid orderId)
-        {
-            var order = _ordersRepository.TryGetById(orderId);
-            return View(order);
-        }
-        public IActionResult UpdateOrderStatus(Guid orderId, OrderStatus status)
-        {
-            _ordersRepository.UpdateStatus(orderId, status);
-            return RedirectToAction(nameof(Index));
-
-        }
+    public IActionResult Index()
+    {
+        var order = _ordersRepository.GetAll();
+        return View(order.Select(x => x.ToOrderViewModel()).ToList());
+    }
+    public IActionResult Detail(Guid orderId)
+    {
+        var order = _ordersRepository.TryGetById(orderId);
+        return View(order.ToOrderViewModel());
+    }
+    public IActionResult UpdateOrderStatus(Guid orderId, OrderStatusViewModel status)
+    {
+        _ordersRepository.UpdateStatus(orderId, (OrderStatus)(int)status);
+        return RedirectToAction(nameof(Index));
     }
 }

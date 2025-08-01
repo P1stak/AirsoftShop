@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.DB.Data.Interfacees;
 using OnlineShop.DB.Models;
 
-namespace OnlineShop.DB
+namespace OnlineShop.DB.Data.Repository
 {
     public class ProductsDbRepository : IProductsDbRepository
     {
@@ -43,7 +44,7 @@ namespace OnlineShop.DB
             return _dbContext.Products.ToList();
         }
 
-        public Product? TryGetById(Guid id)
+        public Product TryGetById(Guid id)
         {
             return _dbContext.Products.FirstOrDefault(p => p.Id == id);
         }
