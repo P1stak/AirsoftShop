@@ -1,12 +1,12 @@
 using AirsoftShop.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShop.DB;
+using OnlineShop.DB.Data.Interfacees;
 
 namespace AirsoftShop.Controllers
 {
     public class HomeController : Controller
     {
-        private IProductsDbRepository _productsDbRepository;
+        private readonly IProductsDbRepository _productsDbRepository;
 
         public HomeController(IProductsDbRepository productsDbRepository)
         {
@@ -16,7 +16,7 @@ namespace AirsoftShop.Controllers
         public IActionResult Index()
         {
             var products = _productsDbRepository.GetAll();
-            return View(Mapping.ToProductViewModels(products));
+            return View(products.ToProductViewModels());
         }
     }
 }

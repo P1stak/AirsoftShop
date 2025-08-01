@@ -1,4 +1,4 @@
-﻿@model List<Order>
+﻿@model List<OrderViewModel>
 
 <style>
     .admin-panel {
@@ -101,7 +101,7 @@
                             {
                                 <tr>
                                     <td class="text-center">@(i + 1)</td>
-                                    <td class="text-center">@Model[i].TotalCost</td>
+                                    <td class="text-center">@Model[i].TotalCost.ToString("C")</td>
                                     <td class="text-center">@EnumHelper.GetDisplayName(Model[i].Status)</td>
                                     <td class="text-center">в админе сделать вывод логина пользователя</td>
                                     <td class="text-center">@Model[i].CreateDateTime.ToString("dd.MM.yyyy")</td>

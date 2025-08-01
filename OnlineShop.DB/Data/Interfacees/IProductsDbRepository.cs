@@ -1,6 +1,6 @@
 ﻿using OnlineShop.DB.Models;
 
-namespace OnlineShop.DB
+namespace OnlineShop.DB.Data.Interfacees
 {
     public interface IProductsDbRepository
     {

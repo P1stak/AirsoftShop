@@ -2,7 +2,7 @@
 
 namespace AirsoftShop.Models
 {
-    public enum OrderStatus
+    public enum OrderStatusViewModel
     {
         [Display(Name = "Заказ создан")]
         Created,

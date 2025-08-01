@@ -1,13 +1,20 @@
 ﻿@model CartViewModel
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="~/css/site.css" />
 
 @if (Model == null || Model.Items.Count == 0)
 {
     <div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
-        <div class="text-center">
-            <h3>Корзина пуста</h3>
-            <a class="btn btn-primary" href="/home/index">Вернуться к покупкам</a>
+        <div class="empty-cart">
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <h2>Ваша корзина пуста</h2>
+            <p>Добавляйте товары в корзину, чтобы продолжить оформление заказа</p>
+            <a class="btn btn-primary btn-lg" href="/home/index">
+                <i class="fas fa-arrow-left"></i>Вернуться к покупкам
+            </a>
         </div>
     </div>
 }
@@ -48,10 +55,9 @@ else
                 <h3>@Model.Cost</h3>
             </div>
             <div class="text-center">
-                <a class="btn btn-primary" href="/home/index" role="button">Прололжить покупки</a>
+                <a class="btn btn-primary" href="/home/index" role="button">Продолжить покупки</a>
                 <a class="btn btn-success" href="/order/index" role="button">Оформить заказ</a>
             </div>
         </div>
     </div>
 }
-

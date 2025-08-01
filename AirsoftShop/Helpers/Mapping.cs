@@ -5,18 +5,7 @@ namespace AirsoftShop.Helpers
 {
     public static class Mapping
     {
-        public static ProductViewModel ToProductViewModel(Product product)
-        {
-            return new ProductViewModel
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Cost = product.Cost,
-                Descriprion = product.Descriprion,
-                ImageUrl = product.ImageUrl
-            };
-        }
-        public static List<ProductViewModel> ToProductViewModels(List<Product> products)
+        public static List<ProductViewModel> ToProductViewModels(this List<Product> products)
         {
             var productsViewModels = new List<ProductViewModel>();
 
@@ -27,7 +16,62 @@ namespace AirsoftShop.Helpers
             return productsViewModels;
         }
 
-        public static CartViewModel ToCartViewModel(Cart cart)
+        public static ProductViewModel ToProductViewModel(this Product product)
+        {
+            return new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Cost = product.Cost,
+                Descriprion = product.Descriprion,
+                ImageUrl = product.ImageUrl
+            };
+        }
+
+        public static OrderViewModel ToOrderViewModel(this Order order)
+        {
+            return new OrderViewModel
+            {
+                Id = order.Id,
+                CreateDateTime = order.CreateDateTime,
+                Status = (OrderStatusViewModel)(int)order.Status,
+                User = ToUserDeliveryInfoViewModel(order.User),
+                Items = ToCartItemViewModels(order.Items)
+            };
+            
+        }
+
+        public static UserDeliveryInfoViewModel ToUserDeliveryInfoViewModel(this UserDeliveryInfo deliveryInfo)
+        {
+            return new UserDeliveryInfoViewModel
+            {
+                Name = deliveryInfo.Name,
+                Address = deliveryInfo.Address,
+                Phone = deliveryInfo.Phone
+            };
+        }
+        public static Product ToProduct(this ProductViewModel productViewModel)
+        {
+            return new Product
+            {
+                Id = productViewModel.Id,
+                Name = productViewModel.Name,
+                Cost = productViewModel.Cost,
+                Descriprion = productViewModel.Descriprion,
+                ImageUrl = productViewModel.ImageUrl
+            };
+        }
+
+        public static UserDeliveryInfo ToUser(this UserDeliveryInfoViewModel user)
+        {
+            return new UserDeliveryInfo
+            {
+                Name = user.Name,
+                Address = user.Address,
+                Phone = user.Phone,
+            };
+        }
+        public static CartViewModel ToCartViewModel(this Cart cart)
         {
             if (cart == null)
             {
@@ -41,8 +85,7 @@ namespace AirsoftShop.Helpers
                 Items = ToCartItemViewModels(cart.Items)
             };
         }
-
-        public static List<CartItemViewModel> ToCartItemViewModels(List<CartItem> cartDbItems)
+        public static List<CartItemViewModel> ToCartItemViewModels(this List<CartItem> cartDbItems)
         {
             var cartItems = new List<CartItemViewModel>();
 
@@ -58,7 +101,16 @@ namespace AirsoftShop.Helpers
             }
             return cartItems;
         }
+        //
+        public static UserDeliveryInfoViewModel UserDeliveryInfoModel(UserDeliveryInfo user)
+        {
+            return new UserDeliveryInfoViewModel
+            {
+                Name = user.Name,
+                Phone = user.Phone,
+                Address = user.Address
+            };
+        }
     }
-
 }
 
