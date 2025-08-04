@@ -2,7 +2,7 @@
 
 namespace AirsoftShop.Models
 {
-    public class Login
+    public class LoginViewModel
     {
         [Required]
         [EmailAddress]
@@ -14,5 +14,7 @@ namespace AirsoftShop.Models
             ErrorMessage = "Пароль должен использовать латинские буквы, содержать 1 заглавную букву, 1 цифру и 1 спецсимвол")]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

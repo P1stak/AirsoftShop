@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using OnlineShop.DB.Context;
 using OnlineShop.DB.Data.Interfacees;
 using OnlineShop.DB.Models;
 
@@ -20,10 +20,6 @@ namespace OnlineShop.DB.Data.Repository
         }
         public void Delete(Guid productId)
         {
-            //var product = _dbContext.Products.FirstOrDefault(x => x.Id == productId);
-            //_dbContext.Remove(product);
-            //_dbContext.SaveChanges();
-
             var product = TryGetById(productId);
             _dbContext.Products.Remove(product);
             _dbContext.SaveChanges();
@@ -51,6 +47,12 @@ namespace OnlineShop.DB.Data.Repository
             existingproduct.Cost = product.Cost;
             existingproduct.ImageUrl = product.ImageUrl;
             _dbContext.SaveChanges();
+        }
+        public IEnumerable<Product> SearchByName(string name)
+        {
+            var products = _dbContext.Products.Where(p => p.Name.ToLower().Contains(name.ToLower()));
+
+            return products;
         }
     }
 }

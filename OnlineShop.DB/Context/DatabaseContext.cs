@@ -1,20 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.DB.Models;
 
-namespace OnlineShop.DB
+namespace OnlineShop.DB.Context
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Cart> Carts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> Items { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            Database.Migrate();
+            //Database.EnsureCreated(); //создаем базу данных при первом обращении
+
+            Database.Migrate(); //миграция
+
+
+            // если изменилась модель то надо в Package Manager Console добавить миграцию например командой --Add-Migration Initialization -context DatabaseContext--
+            // где Initialization - имя миграции, DatabaseContext - имя контекста в рамках которой выполняется миграция. Сейчас контекст пока 1.
+            //Add-Migration AddIdentityContext -context IdentityContext -OutputDir Migrations/Identity
+            //--dotnet ef database update--context ConfigurationDbContext
+
+            //dotnet ef migrations add InitConfigration -c Fully.Qualified.Namespaces.ConfigurationDbContext -o Migrations/Identity
+            //dotnet ef migrations add InitialIdentityServerConfigurationDbMigration -c IdentityServer4.EntityFramework.DbContexts.ConfigurationDbContext -o /Migrations/Identity
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Product>().HasData(new List<Product>
             {
                 new Product
@@ -105,7 +119,6 @@ namespace OnlineShop.DB
                     Description = "Гильза Г52Д для гранатомёта страйкбольного Pyrosof",
                     ImageUrl = "/images/G52D.jpg"
                 }
-
             });
         }
     }

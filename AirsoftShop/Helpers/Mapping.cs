@@ -1,4 +1,6 @@
-﻿using AirsoftShop.Models;
+﻿using AirsoftShop.Areas.Admin.Models;
+using AirsoftShop.Models;
+using Microsoft.AspNetCore.Identity;
 using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Helpers
@@ -101,7 +103,7 @@ namespace AirsoftShop.Helpers
             }
             return cartItems;
         }
-        //
+
         public static UserDeliveryInfoViewModel UserDeliveryInfoModel(UserDeliveryInfo user)
         {
             return new UserDeliveryInfoViewModel
@@ -110,6 +112,34 @@ namespace AirsoftShop.Helpers
                 Phone = user.Phone,
                 Address = user.Address
             };
+        }
+        public static UserViewModel ToUserViewModel(this User user)
+        {
+            return new UserViewModel
+            {
+                UserName = user.UserName,
+                PhoneNumber = user.PhoneNumber,
+                
+            };
+        }
+        public static RoleViewModel ToRoleViewModel(this IdentityRole role)
+        {
+            var roleViewModel = new RoleViewModel
+            {
+                Name = role.Name
+            };
+            return roleViewModel;
+        }
+
+        public static List<RoleViewModel> ToRoleViewModels(this List<IdentityRole> roles)
+        {
+            var roleViewModels = new List<RoleViewModel>();
+            foreach (var role in roles)
+            {
+                var roleViewModel = role.ToRoleViewModel();
+                roleViewModels.Add(roleViewModel);
+            }
+            return roleViewModels;
         }
     }
 }

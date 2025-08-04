@@ -1,4 +1,4 @@
-﻿@model UserAccount
+﻿@model UserViewModel
 
 <form method="post">
     <div>
@@ -7,27 +7,27 @@
 
     <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
 
-    <input type="hidden" name="userName" value="@Model.Email" />
+    <input type="hidden" name="userName" value="@Model.UserName" />
 
     <div class="row">
         <div class="col-6">
-            <label asp-for="Email"></label><br />
-            <input class="form-control" asp-for="Email" />
-            <span asp-validation-for="Email" />
+            <label asp-for="UserName"></label><br />
+            <input class="form-control" asp-for="UserName" />
+            <span asp-validation-for="UserName" />
         </div>
     </div>
     <div class="row">
         <div class="col-6">
-            <label asp-for="UserFullName"></label><br />
-            <input class="form-control" asp-for="UserFullName" />
-            <span asp-validation-for="UserFullName" />
+            <label asp-for="UserName"></label><br />
+            <input class="form-control" asp-for="UserName" />
+            <span asp-validation-for="UserName" />
         </div>
     </div>
     <div class="row">
         <div class="col-6">
-            <label asp-for="Phone"></label><br />
-            <input class="form-control" asp-for="Phone" />
-            <span asp-validation-for="Phone" />
+            <label asp-for="PhoneNumber"></label><br />
+            <input class="form-control" asp-for="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber" />
         </div>
     </div>
     <div>

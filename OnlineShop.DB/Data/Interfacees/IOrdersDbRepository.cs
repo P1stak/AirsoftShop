@@ -8,5 +8,6 @@ namespace AirsoftShop.Data.Interfaces
         List<Order> GetAll();
         Order TryGetById(Guid orderId);
         void UpdateStatus(Guid orderId, OrderStatus newStatus);
+        public void Remove(Guid orderId);
     }
 }

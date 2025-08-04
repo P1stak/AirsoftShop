@@ -103,10 +103,11 @@
                                     <td class="text-center">@(i + 1)</td>
                                     <td class="text-center">@Model[i].TotalCost.ToString("C")</td>
                                     <td class="text-center">@EnumHelper.GetDisplayName(Model[i].Status)</td>
-                                    <td class="text-center">в админе сделать вывод логина пользователя</td>
+                                    <td class="text-center">@User.Identity.Name</td>
                                     <td class="text-center">@Model[i].CreateDateTime.ToString("dd.MM.yyyy")</td>
                                     <td class="text-center">@Model[i].CreateDateTime.ToString("HH:MM:s")</td>
                                     <td class="text-center"><a asp-area="Admin" asp-controller="Order" asp-action="Detail" asp-route-orderId="@Model[i].Id" class="btn btn-sm btn-warning">Подробнее</a></td>
+                                    <td class="text-center"><a asp-area="Admin" asp-controller="Order" asp-action="RemoveOrder" asp-route-orderId="@Model[i].Id" class="btn btn-sm btn-warning">Удалить заказ</a></td>
                                 </tr>
                             }
                         </tbody>

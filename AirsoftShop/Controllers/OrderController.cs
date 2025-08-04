@@ -1,12 +1,15 @@
 ﻿using AirsoftShop.Data.Interfaces;
 using AirsoftShop.Helpers;
 using AirsoftShop.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 using OnlineShop.DB.Data.Interfacees;
 using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ICartsDbRepository _cartsDbRepository;

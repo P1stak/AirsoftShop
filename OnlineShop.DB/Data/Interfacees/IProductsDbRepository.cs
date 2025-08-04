@@ -9,5 +9,6 @@ namespace OnlineShop.DB.Data.Interfacees
         void Add(Product product);
         void Delete(Guid id);
         void Update(Product product);
+        public IEnumerable<Product> SearchByName(string name);
     }
 }

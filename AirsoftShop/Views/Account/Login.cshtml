@@ -1,8 +1,12 @@
-﻿@model Login
+﻿@model LoginViewModel
 
 <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+
     <form asp-controller="Account" asp-action="Login" method="post" class="border p-4 rounded" style="width: 300px;">
         <h1 class="text-center mb-4">Вход</h1>
+
+        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+
 
         <div class="text-danger form-text-weight-bold" asp-validation-summary="ModelOnly"></div>
 
@@ -20,12 +24,12 @@
 
         <div class="mb-3 form-check">
             <input asp-for="RememberMe" class="form-check-input">
-            <label asp-for="RememberMe" class="form-check-label">Запомнить меня</label>
+            <label asp-for="RememberMe" value="true" class="form-check-label">Запомнить меня</label>
         </div>
 
         <button type="submit" class="btn btn-primary w-100 mb-2">Войти</button>
 
-        <a href="/account/register" class="text-muted d-block text-center">Зарегистрироваться</a>
+        <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-ReturnUrl="@Model.ReturnUrl" class="text-muted d-block text-center">Зарегистрироваться</a>
     </form>
 </div>
 

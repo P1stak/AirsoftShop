@@ -1,9 +1,12 @@
 ﻿using AirsoftShop.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 using OnlineShop.DB.Data.Interfacees;
 
 namespace AirsoftShop.Controllers
 {
+    [Authorize]
     public class FavoriteController : Controller
     {
         private readonly IFavoriteDbRepository _favoriteDbRepository;

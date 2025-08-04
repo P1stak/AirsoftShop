@@ -1,6 +1,6 @@
 ﻿using AirsoftShop.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using OnlineShop.DB;
+using OnlineShop.DB.Context;
 using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Data.Repositories
@@ -47,6 +47,12 @@ namespace AirsoftShop.Data.Repositories
                 order.Status = newStatus;
                 _databaseContext.SaveChanges();
             }
+        }
+        public void Remove(Guid orderId)
+        {
+            var order = TryGetById(orderId);
+            _databaseContext.Orders.Remove(order);
+            _databaseContext.SaveChanges();
         }
     }
 }

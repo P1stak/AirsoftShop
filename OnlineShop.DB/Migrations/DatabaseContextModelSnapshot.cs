@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using OnlineShop.DB;
+using OnlineShop.DB.Context;
 
 #nullable disable
 
@@ -86,7 +86,7 @@ namespace OnlineShop.DB.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("OnlineShop.DB.Models.FavoriteProduct", b =>

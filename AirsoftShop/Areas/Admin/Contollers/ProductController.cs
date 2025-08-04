@@ -1,12 +1,14 @@
 ﻿using AirsoftShop.Helpers;
 using AirsoftShop.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 using OnlineShop.DB.Data.Interfacees;
-using OnlineShop.DB.Models;
 
 namespace AirsoftShop.Areas.Admin.Contollers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class ProductController : Controller
     {
         private readonly IProductsDbRepository _productsDbRepository;

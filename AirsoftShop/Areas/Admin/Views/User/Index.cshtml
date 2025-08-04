@@ -1,4 +1,4 @@
-﻿@model List<UserAccount>
+﻿@model List<UserViewModel>
 
 <style>
     .admin-panel {
@@ -84,7 +84,7 @@
         <div class="col-9">
             <div class="admin-content">
                 <h3 class="text-center mb-4">Список пользователей</h3>
-                
+
                 @if (Model == null || Model.Count == 0)
                 {
                     <h6 class="text-primary text-center mb-4" style="--bs-text-opacity: .5;">Пока список пользователей пуст</h6>
@@ -94,8 +94,7 @@
                     <table class="user-table">
                         <thead>
                             <tr>
-                                <th>Логин (Email)</th>
-                                <th>Имя</th>
+                                <th>Логин</th>
                                 <th>Телефон</th>
                                 <th></th>
                             </tr>
@@ -104,20 +103,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.Email</td>
+                                    <td>@item.UserName</td>
+                                    <td>@item.PhoneNumber</td>
                                     <td>
-                                        @if (!string.IsNullOrEmpty(item.UserFullName) && item.UserFullName.Split(' ').Length >= 2)
-                                        {
-                                            @item.UserFullName.Split(' ')[1]
-                                        }
-                                        else
-                                        {
-                                            <text>Не указано</text>
-                                        }
-                                    </td>
-                                    <td>@item.Phone</td>
-                                    <td>
-                                        <a asp-area="Admin" asp-controller="User" asp-action="Detail" asp-route-userName="@item.UserFullName">Подробнее</a>
+                                        <a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-name="@item.UserName">Подробнее</a>
                                     </td>
                                 </tr>
                             }

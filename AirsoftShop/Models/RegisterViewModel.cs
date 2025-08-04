@@ -2,10 +2,10 @@
 
 namespace AirsoftShop.Models
 {
-    public class Register
+    public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email обязателен")]
+        [EmailAddress(ErrorMessage = "Некорректный формат Email")]
         public string Email { get; set; }
 
         [Required]
@@ -19,8 +19,6 @@ namespace AirsoftShop.Models
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        public string UserFullName { get; set; }
 
         [Required]
         [Phone(ErrorMessage = "Некорректный формат телефона")]
@@ -29,6 +27,13 @@ namespace AirsoftShop.Models
         ErrorMessage = "Некорректный формат телефона. Пример: +7(XXX)XXX-XX-XX или 8XXXXXXXXXX")]
         public string Phone { get; set; }
 
+
+        [Required(ErrorMessage = "Поле обязательно")]
+        public string UserName { get; set; }
+
+        public string Address { get; set; }
+
+        public string ReturnUrl { get; set; }
 
     }
 }

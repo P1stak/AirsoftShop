@@ -1,49 +1,68 @@
 ﻿using AirsoftShop.Areas.Admin.Models;
-using AirsoftShop.Data.Interfaces;
+using AirsoftShop.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.DB;
 
 namespace AirsoftShop.Areas.Admin.Contollers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class RoleController : Controller
     {
-        private readonly IRolesInMemoryRepository _rolesInMemoryRepository;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleController(IRolesInMemoryRepository rolesInMemoryRepository)
+        public RoleController(RoleManager<IdentityRole> roleManager)
         {
-            _rolesInMemoryRepository = rolesInMemoryRepository;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
         {
-            var roles = _rolesInMemoryRepository.GetAllRoles();
-            return View(roles);
+            var roles = _roleManager.Roles.ToList();
+            return View(roles.Select(x => new RoleViewModel { Name = x.Name }));
         }
 
         public IActionResult Delete(string roleName)
         {
-            _rolesInMemoryRepository.Delete(roleName);
+            var role = _roleManager.FindByNameAsync(roleName).Result;
+
+            if (role != null)
+            {
+                _roleManager.DeleteAsync(role).Wait();
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Add()
         {
-            return View(new Role());
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Add(Role role)
+        public IActionResult Add(RoleViewModel role)
         {
-            if (_rolesInMemoryRepository.TryGetByRoleName(role.Name) != null)
+            var result = _roleManager.CreateAsync(new IdentityRole(role.Name)).Result;
+
+            if (result.Succeeded)
             {
-                ModelState.AddModelError("", "Такая роль уже существует");
-            }
-            if (ModelState.IsValid)
-            {
-                _rolesInMemoryRepository.AddRole(role);
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
             return View(role);
+        }
+        public IActionResult Edit(string roleName)
+        {
+            var role = _roleManager.FindByIdAsync(roleName).Result;
+            return View(role.ToRoleViewModel());
         }
     }
 }

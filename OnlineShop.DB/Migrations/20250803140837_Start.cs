@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OnlineShop.DB.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialization : Migration
+    public partial class Start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -94,7 +94,7 @@ namespace OnlineShop.DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartItem",
+                name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -105,19 +105,19 @@ namespace OnlineShop.DB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItem", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CartItem_Carts_CartId",
+                        name: "FK_Items_Carts_CartId",
                         column: x => x.CartId,
                         principalTable: "Carts",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CartItem_Orders_OrderId",
+                        name: "FK_Items_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CartItem_Products_ProductId",
+                        name: "FK_Items_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -143,23 +143,23 @@ namespace OnlineShop.DB.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_CartId",
-                table: "CartItem",
-                column: "CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartItem_OrderId",
-                table: "CartItem",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartItem_ProductId",
-                table: "CartItem",
+                name: "IX_FavoriteProducts_ProductId",
+                table: "FavoriteProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteProducts_ProductId",
-                table: "FavoriteProducts",
+                name: "IX_Items_CartId",
+                table: "Items",
+                column: "CartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_OrderId",
+                table: "Items",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_ProductId",
+                table: "Items",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -172,10 +172,10 @@ namespace OnlineShop.DB.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartItem");
+                name: "FavoriteProducts");
 
             migrationBuilder.DropTable(
-                name: "FavoriteProducts");
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "Carts");

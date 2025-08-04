@@ -1,4 +1,4 @@
-﻿@model Role
+﻿@model RoleViewModel
 
 <form method="post">
     <div>
@@ -15,6 +15,6 @@
         </div>
     </div>
     <div>
-        <button class="save-button" type="submit" asp-area="Admin" asp-controller="Role" asp-action="Add" asp-route-orderId="@Model.Name">Сохранить</button>
+        <button class="save-button" type="submit" asp-area="Admin" asp-controller="Role" asp-action="Add">Сохранить</button>
     </div>
 </form>
