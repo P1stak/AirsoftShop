@@ -1,4 +1,5 @@
-﻿using AirsoftShop.Models;
+﻿using AirsoftShop.Helpers;
+using AirsoftShop.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -62,30 +63,25 @@ namespace AirsoftShop.Controllers
             }
             if (ModelState.IsValid)
             {
-                var user = new User 
-                {
-                    Email = registration.Email,
-                    UserName = registration.UserName,
-                    PhoneNumber = registration.Phone
-                };
+                var user = registration.ToUserRegistration();
 
                 var result = _userManager.CreateAsync(user, registration.Password).Result;
 
                 if (result.Succeeded)
                 {
-                    _signInManager.SignInAsync(user, isPersistent: false).Wait();
+                    _signInManager.SignInAsync(user, false).Wait();
+
                     return Redirect(registration.ReturnUrl ?? "/Home");
                 }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
-                
             }
-
+            else
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    // Записать в лог или отладить (error.ErrorMessage или error.Exception)
+                    Console.WriteLine(error.ErrorMessage);
+                }
+            }
             return View(registration);
         }
     }
