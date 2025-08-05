@@ -4,9 +4,9 @@
 
     <form asp-controller="Account" asp-action="Register" method="post" class="border p-4 rounded" style="width: 300px;">
 
-        @Html.AntiForgeryToken()
-
-        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+         @Html.AntiForgeryToken() 
+ 
+        @* <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" /> *@ 
 
         <h1 class="text-center mb-4">Регистрация</h1>
 
@@ -55,5 +55,6 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
 
 

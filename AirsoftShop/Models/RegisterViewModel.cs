@@ -4,7 +4,7 @@ namespace AirsoftShop.Models
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Email обязателен")]
+        [Required]
         [EmailAddress(ErrorMessage = "Некорректный формат Email")]
         public string Email { get; set; }
 
@@ -31,9 +31,9 @@ namespace AirsoftShop.Models
         [Required(ErrorMessage = "Поле обязательно")]
         public string UserName { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
 
     }
 }

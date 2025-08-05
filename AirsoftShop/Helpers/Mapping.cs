@@ -141,6 +141,18 @@ namespace AirsoftShop.Helpers
             }
             return roleViewModels;
         }
+
+        public static User ToUserRegistration(this RegisterViewModel register)
+        {
+            var user = new User 
+            {
+                Email = register.Email,
+                UserName = register.UserName,
+                PasswordHash = register.Password,
+                PhoneNumber = register.Phone
+            };
+            return user;
+        }
     }
 }
 
