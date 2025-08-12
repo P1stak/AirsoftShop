@@ -11,41 +11,54 @@ namespace AirsoftShop.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager; // хранит куки (какой пользователь уже авторизовался)
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly SignInManager<User> _signInManager;
+        private readonly ILogger<AccountController> _logger;
+
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         public IActionResult Login(string returnUrl)
         {
-            return View(new LoginViewModel() { ReturnUrl = returnUrl });
+            return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel login)
+        public async Task<IActionResult> Login(LoginViewModel login)
         {
             if (ModelState.IsValid)
             {
-                var result = _signInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, false).Result;
+                _logger.LogInformation("Attempting to sign in user with email: {Email}", login.Email);
+
+                var user = await _userManager.FindByEmailAsync(login.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "Не верный адрес электронной почты или пользователь не существует.");
+                    return View(login);
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation("User signed in successfully: {Email}", login.Email);
                     return Redirect(login.ReturnUrl ?? "/Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Не верный пароль!");
+                    _logger.LogWarning("Failed to sign in user with email: {Email}", login.Email);
+                    ModelState.AddModelError("", "Не верный пароль или email!");
                 }
             }
             return View(login);
-
         }
 
-        public IActionResult Logout(string returnUrl)
+        public async Task<IActionResult> Logout(string returnUrl)
         {
-            _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -55,7 +68,7 @@ namespace AirsoftShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel registration)
+        public async Task<IActionResult> Register(RegisterViewModel registration)
         {
             if (registration.Email == registration.Password)
             {
@@ -65,25 +78,23 @@ namespace AirsoftShop.Controllers
             {
                 var user = registration.ToUserRegistration();
 
-                var result = _userManager.CreateAsync(user, registration.Password).Result;
+                var result = await _userManager.CreateAsync(user, registration.Password);
 
                 if (result.Succeeded)
                 {
-                    _signInManager.SignInAsync(user, false).Wait();
+                    await _signInManager.SignInAsync(user, false);
 
                     return Redirect(registration.ReturnUrl ?? "/Home");
                 }
-            }
-            else
-            {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                else
                 {
-                    // Записать в лог или отладить (error.ErrorMessage или error.Exception)
-                    Console.WriteLine(error.ErrorMessage);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
             }
             return View(registration);
         }
     }
 }
-

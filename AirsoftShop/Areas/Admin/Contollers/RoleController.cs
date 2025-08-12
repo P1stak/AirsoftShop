@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.DB;
 
-namespace AirsoftShop.Areas.Admin.Contollers
+namespace AirsoftShop.Areas.Admin.Controllers
 {
     [Area(Constants.AdminRoleName)]
     [Authorize(Roles = Constants.AdminRoleName)]
@@ -21,7 +21,10 @@ namespace AirsoftShop.Areas.Admin.Contollers
         public IActionResult Index()
         {
             var roles = _roleManager.Roles.ToList();
-            return View(roles.Select(x => new RoleViewModel { Name = x.Name }));
+
+            var roleViewModels = roles.Select(role => new RoleViewModel { Name = role.Name }).ToList();
+
+            return View(roleViewModels);
         }
 
         public IActionResult Delete(string roleName)
@@ -59,6 +62,7 @@ namespace AirsoftShop.Areas.Admin.Contollers
             }
             return View(role);
         }
+
         public IActionResult Edit(string roleName)
         {
             var role = _roleManager.FindByIdAsync(roleName).Result;

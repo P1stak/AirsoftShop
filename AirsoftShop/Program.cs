@@ -1,5 +1,6 @@
 using AirsoftShop.Data.Interfaces;
 using AirsoftShop.Data.Repositories;
+using AirsoftShop.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // сериализация
 builder.Host.UseSerilog((context, configuration) => configuration
-.ReadFrom.Configuration(context.Configuration));
+    .ReadFrom.Configuration(context.Configuration));
 
 // добавление контроллеров с представлениями в коллекцию сервисов
 builder.Services.AddControllersWithViews();
@@ -25,52 +26,43 @@ builder.Services.AddTransient<IOrdersDbRepository, OrdersDbRepository>();
 builder.Services.AddTransient<IProductsDbRepository, ProductsDbRepository>();
 builder.Services.AddTransient<ICartsDbRepository, CartsDbRepository>();
 builder.Services.AddTransient<IFavoriteDbRepository, FavoriteDbRepository>();
-builder.Services.AddControllersWithViews();
-
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
     {
-        new CultureInfo("en-US")
+        new CultureInfo("ru-RU")
     };
-    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.DefaultRequestCulture = new RequestCulture("ru-RU");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });
-
-// builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-
 
 string connection = builder.Configuration.GetConnectionString("online_shop");
 
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connection));
 
-
-
 // Настройка Identity с использованием основного контекста
 builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(connection));
 
-// указываем тип пользователя и роли
 builder.Services.AddIdentity<User, IdentityRole>()
-                // устанавливаем тип хранилища - наш контекст
-                .AddEntityFrameworkStores<IdentityContext>();
-
+    .AddEntityFrameworkStores<IdentityContext>();
 
 builder.Services.AddHttpContextAccessor();
-
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromHours(8);
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
+
     options.Cookie = new CookieBuilder
     {
-        IsEssential = true
+        IsEssential = true,
+        HttpOnly = true,
+        SameSite = SameSiteMode.Lax
     };
 });
-
 
 var app = builder.Build();
 
@@ -84,21 +76,20 @@ app.UseRequestLocalization();
 
 app.UseSerilogRequestLogging();
 
+//app.UseStaticFiles(new StaticFileOptions()
+//{
+//    OnPrepareResponse = ctx =>
+//    {
+//        ctx.Context.Response.Headers.Add("Cache-Control", "public,max-age=600");
+//    }
+//});
 
-app.UseStaticFiles(new StaticFileOptions()
-{
-    OnPrepareResponse = ctx =>
-    {
-        ctx.Context.Response.Headers.Add("Cache-Control", "public,max-age=600");
-    }
-});
+app.UseStaticFiles();
 
 app.UseRouting();
 
-// Аутентификация и авторизация должны быть в таком порядке
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapControllerRoute(
     name: "Area",

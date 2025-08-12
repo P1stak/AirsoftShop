@@ -19,7 +19,6 @@ namespace AirsoftShop.Models
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
 
-
         [Required]
         [Phone(ErrorMessage = "Некорректный формат телефона")]
         [RegularExpression(
@@ -27,13 +26,12 @@ namespace AirsoftShop.Models
         ErrorMessage = "Некорректный формат телефона. Пример: +7(XXX)XXX-XX-XX или 8XXXXXXXXXX")]
         public string Phone { get; set; }
 
-
         [Required(ErrorMessage = "Поле обязательно")]
+        [RegularExpression(@"^[А-ЯЁа-яё]+$", ErrorMessage = "Имя пользователя должно содержать только кириллические символы")]
         public string UserName { get; set; }
 
         public string? Address { get; set; }
 
         public string? ReturnUrl { get; set; }
-
     }
 }
