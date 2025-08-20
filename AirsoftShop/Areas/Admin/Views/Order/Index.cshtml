@@ -1,117 +1,52 @@
 ﻿@model List<OrderViewModel>
 
-<style>
-    .admin-panel {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        padding: 20px;
-    }
-
-    .admin-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .empty-list-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 300px;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-    }
-
-    .empty-list-message {
-        font-size: 18px;
-        color: #6c757d;
-    }
-
-    .order-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-        .order-table th {
-            background-color: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .order-table td {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .order-table tr:last-child td {
-            border-bottom: none;
-        }
-
-    .table-header {
-        background-color: #e9ecef;
-        font-weight: bold;
-    }
-
-    .btn-custom {
-        background-color: #ffc107;
-        color: #333;
-        padding: 6px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-        .btn-custom:hover {
-            background-color: #e0a800;
-        }
-</style>
-
 <div class="admin-panel">
     <div class="row">
         @await Html.PartialAsync("AdminLeftMenu")
-
         <div class="col-9">
             <div class="admin-content">
                 <h3 class="text-center mb-4">Список заказов</h3>
 
                 @if (Model == null || Model.Count == 0)
                 {
-                    <h6 class="text-primary text-center mb-4" style="--bs-text-opacity: .5;">Пока список заказов пуст</h6>
+                    <div class="empty-list-container">
+                        <h6>Пока список заказов пуст</h6>
+                    </div>
                 }
                 else
                 {
-                    <table class="order-table">
-                        <thead>
-                            <tr class="table-header">
-                                <th>№</th>
-                                <th>Сумма</th>
-                                <th>Статус</th>
-                                <th>Пользователь (логин)</th>
-                                <th>Дата</th>
-                                <th>Время</th>
-                                <th>Действие</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (var i = 0; i < Model.Count; i++)
-                            {
+                    <div style="overflow-x:hidden;">
+                        <table class="order-table">
+                            <thead>
                                 <tr>
-                                    <td class="text-center">@(i + 1)</td>
-                                    <td class="text-center">@Model[i].TotalCost.ToString("C")</td>
-                                    <td class="text-center">@EnumHelper.GetDisplayName(Model[i].Status)</td>
-                                    <td class="text-center">@User.Identity.Name</td>
-                                    <td class="text-center">@Model[i].CreateDateTime.ToString("dd.MM.yyyy")</td>
-                                    <td class="text-center">@Model[i].CreateDateTime.ToString("HH:MM:s")</td>
-                                    <td class="text-center"><a asp-area="Admin" asp-controller="Order" asp-action="Detail" asp-route-orderId="@Model[i].Id" class="btn btn-sm btn-warning">Подробнее</a></td>
-                                    <td class="text-center"><a asp-area="Admin" asp-controller="Order" asp-action="RemoveOrder" asp-route-orderId="@Model[i].Id" class="btn btn-sm btn-warning">Удалить заказ</a></td>
+                                    <th>№</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                    <th>Пользователь (логин)</th>
+                                    <th>Дата</th>
+                                    <th>Время</th>
+                                    <th style="min-width: 200px;">Действие</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @for (var i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td>@Model[i].TotalCost.ToString("C")</td>
+                                        <td>@EnumHelper.GetDisplayName(Model[i].Status)</td>
+                                        <td>@User.Identity.Name</td>
+                                        <td>@Model[i].CreateDateTime.ToString("dd.MM.yyyy")</td>
+                                        <td>@Model[i].CreateDateTime.ToString("HH:mm:ss")</td>
+                                        <td class="action-buttons">
+                                            <a asp-area="Admin" asp-controller="Order" asp-action="Detail" asp-route-orderId="@Model[i].Id" class="btn btn-warning btn-sm btn-custom">Подробнее</a>
+                                            <a asp-area="Admin" asp-controller="Order" asp-action="RemoveOrder" asp-route-orderId="@Model[i].Id" class="btn btn-danger btn-sm btn-custom">Удалить</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
             </div>
         </div>

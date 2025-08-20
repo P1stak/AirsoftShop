@@ -43,10 +43,17 @@ string connection = builder.Configuration.GetConnectionString("online_shop");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connection));
 
 // Ќастройка Identity с использованием основного контекста
-builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(connection));
+builder.Services.AddDbContext<IdentityContext>(options =>  options.UseNpgsql(connection));
 
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<IdentityContext>();
+// чтобы работала кириллица
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZабвгдеЄжзийклмнопрстуфхцчшщъыьэю€јЅ¬√ƒ≈®∆«»… ЋћЌќѕ–—“”‘’÷„ЎўЏџ№Ёёя0123456789 -._@+";
+    options.User.RequireUniqueEmail = true;
+})
+   .AddEntityFrameworkStores<IdentityContext>()
+   .AddDefaultTokenProviders();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -55,7 +55,7 @@
                     </li>
 
 
-                                        @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
                             @if (User.IsInRole(Constants.AdminRoleName))

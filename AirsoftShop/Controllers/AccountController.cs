@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.DB.Models;
+using System.Text;
 
 namespace AirsoftShop.Controllers
 {
@@ -29,29 +30,26 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel login)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation("Attempting to sign in user with email: {Email}", login.Email);
+
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            if (user == null)
             {
-                _logger.LogInformation("Attempting to sign in user with email: {Email}", login.Email);
+                ModelState.AddModelError("", "Не верный адрес электронной почты или пользователь не существует.");
+                return View(login);
+            }
 
-                var user = await _userManager.FindByEmailAsync(login.Email);
-                if (user == null)
-                {
-                    ModelState.AddModelError("", "Не верный адрес электронной почты или пользователь не существует.");
-                    return View(login);
-                }
+            var result = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, lockoutOnFailure: false);
 
-                var result = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, lockoutOnFailure: false);
-
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User signed in successfully: {Email}", login.Email);
-                    return Redirect(login.ReturnUrl ?? "/Home");
-                }
-                else
-                {
-                    _logger.LogWarning("Failed to sign in user with email: {Email}", login.Email);
-                    ModelState.AddModelError("", "Не верный пароль или email!");
-                }
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User signed in successfully: {Email}", login.Email);
+                return Redirect(login.ReturnUrl ?? "/Home");
+            }
+            else
+            {
+                _logger.LogWarning("Failed to sign in user with email: {Email}", login.Email);
+                ModelState.AddModelError("", "Не верный пароль или email!");
             }
             return View(login);
         }
@@ -70,6 +68,12 @@ namespace AirsoftShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registration)
         {
+
+            _logger.LogInformation("Пришло имя пользователя: {UserName}", registration.UserName);
+            _logger.LogInformation("Длина строки: {Length}", registration.UserName?.Length);
+            _logger.LogInformation("Байты имени: {Bytes}",
+                string.Join(", ", Encoding.UTF8.GetBytes(registration.UserName ?? "")));
+
             if (registration.Email == registration.Password)
             {
                 ModelState.AddModelError("", "Логин и пароль не должны совпадать");
@@ -77,7 +81,7 @@ namespace AirsoftShop.Controllers
             if (ModelState.IsValid)
             {
                 var user = registration.ToUserRegistration();
-
+                 
                 var result = await _userManager.CreateAsync(user, registration.Password);
 
                 if (result.Succeeded)

@@ -5,9 +5,6 @@
     <form asp-controller="Account" asp-action="Login" method="post" class="border p-4 rounded" style="width: 300px;">
         <h1 class="text-center mb-4">Вход</h1>
 
-        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
-
-
         <div class="text-danger form-text-weight-bold" asp-validation-summary="ModelOnly"></div>
 
         <div class="mb-3">
